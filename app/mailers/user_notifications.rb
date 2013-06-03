@@ -42,14 +42,12 @@ class UserNotifications < ActionMailer::Base
 
     @last_seen_at = I18n.l(@user.last_seen_at || @user.created_at, format: :short)
 
-    # A list of new topics to show the user
-    @new_topics = Topic.new_topics(min_date)
-    @notifications = @user.notifications.interesting_after(min_date)
-
+    # A list of topics to show the user
+    @new_topics = Topic.for_digest(user, min_date)
     @markdown_linker = MarkdownLinker.new(Discourse.base_url)
 
     # Don't send email unless there is content in it
-    if @new_topics.present? || @notifications.present?
+    if @new_topics.present?
       mail to: user.email,
            from: "#{I18n.t('user_notifications.digest.from', site_name: SiteSetting.title)} <#{SiteSetting.notification_email}>",
            subject: I18n.t('user_notifications.digest.subject_template',

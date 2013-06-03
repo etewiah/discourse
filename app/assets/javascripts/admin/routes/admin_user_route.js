@@ -11,10 +11,6 @@ Discourse.AdminUserRoute = Discourse.Route.extend({
     return { username: Em.get(params, 'username').toLowerCase() };
   },
 
-  renderTemplate: function() {
-    this.render('admin/templates/user', {into: 'admin/templates/admin'});
-  },
-
   setupController: function(controller, model) {
     Discourse.AdminUser.find(Em.get(model, 'username').toLowerCase()).then(function (u) {
       controller.set('content', u);

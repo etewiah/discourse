@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Admin::EmailLogsController do
+describe Admin::EmailController do
 
   it "is a subclass of AdminController" do
-    (Admin::EmailLogsController < Admin::AdminController).should be_true
+    (Admin::EmailController < Admin::AdminController).should be_true
   end
 
   let!(:user) { log_in(:admin) }
@@ -17,10 +17,19 @@ describe Admin::EmailLogsController do
     it { should be_success }
   end
 
+  context '.logs' do
+    before do
+      xhr :get, :logs
+    end
+
+    subject { response }
+    it { should be_success }
+  end
+
   context '.test' do
 
     it 'raises an error without the email parameter' do
-      lambda { xhr :post, :test }.should raise_error(Discourse::InvalidParameters)
+      lambda { xhr :post, :test }.should raise_error(ActionController::ParameterMissing)
     end
 
     context 'with an email address' do
