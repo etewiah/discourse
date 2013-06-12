@@ -37,6 +37,8 @@ Discourse.ListController = Discourse.Controller.extend({
 
     var trackingState = Discourse.TopicTrackingState.current();
 
+
+    listController.set('showWelcome', false);
     if (filterMode === 'categories') {
       return Discourse.CategoryList.list(filterMode).then(function(items) {
         listController.setProperties({
@@ -45,7 +47,8 @@ Discourse.ListController = Discourse.Controller.extend({
           categoryMode: true,
           draft: items.draft,
           draft_key: items.draft_key,
-          draft_sequence: items.draft_sequence
+          draft_sequence: items.draft_sequence,
+          showWelcome: true
         });
         if(trackingState) {
           trackingState.sync(items, filterMode);
