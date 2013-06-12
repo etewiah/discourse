@@ -1,3 +1,14 @@
+// Ed - for deciding which lang text to show
+// in header
+Handlebars.registerHelper('isLang', function(value, options) {
+
+    if(I18n.locale != value ) {
+        return options.inverse(this);
+    } else {
+        return options.fn(this);
+    }
+});
+
 /**
   Breaks up a long string
 

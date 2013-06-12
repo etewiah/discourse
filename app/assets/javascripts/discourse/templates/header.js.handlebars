@@ -1,7 +1,23 @@
 <div class='container'>
   <div class='contents clearfix'>
 
-    {{view.logoHTML}}
+                <div style="float:left" class="title">
+              <a href="/">
+                <span style="font-family: 'Lemon', cursive;font-size: 30px;font-weight: bold;color:#b0081c">
+
+                  Kl<span style="">ava</span>do
+                </span>
+                  <span style="font-family: 'Lemon', cursive;font-size: 30px;font-weight: bold;color:#6aa4c5">
+                  </span>
+                <span style="font-family: 'Lemon', cursive;font-size: 30px;font-weight: normal;color:#C81419"></span>
+                {{#isLang de}}
+                <span style="font-family: 'Lemon', cursive;font-size: 15px;color:white">  - sprachen van Berlin</span>
+                {{else}}
+                <span style="font-family: 'Lemon', cursive;font-size: 15px;color:white">  - talking about Berlin</span>
+                {{/isLang}}
+              </a>
+            </div>
+
 
     {{#if showExtraInfo}}
       <div class="extra-info-wrapper">
