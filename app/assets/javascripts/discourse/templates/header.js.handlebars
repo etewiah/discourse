@@ -33,6 +33,8 @@
           <span class='username'><a {{bindAttr href="currentUser.path"}}>{{currentUser.name}}</a></span>
           {{else}}
             <button {{action showLogin}} class='btn btn-primary btn-small'>{{i18n log_in}}</button>
+                        <button {{action loginGuest}} class='btn btn-primary btn-small'>Try as Guest</button>
+
           {{/if}}
         </div>
       {{/unless}}
