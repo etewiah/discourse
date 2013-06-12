@@ -107,6 +107,7 @@ Discourse::Application.routes.draw do
 
   resources :static
   post 'login' => 'static#enter'
+  get 'about' => 'static#show', id: 'about'
   get 'login' => 'static#show', id: 'login'
   get 'faq' => 'static#show', id: 'faq'
   get 'tos' => 'static#show', id: 'tos'

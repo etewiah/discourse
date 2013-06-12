@@ -28,7 +28,7 @@ Discourse.StaticController = Discourse.Controller.extend({
 });
 
 Discourse.StaticController.reopenClass({
-  pages: ['faq', 'tos', 'privacy', 'login']
+  pages: ['about','faq', 'tos', 'privacy', 'login']
 });
 
 
