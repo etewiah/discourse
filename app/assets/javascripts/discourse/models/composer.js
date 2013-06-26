@@ -260,6 +260,7 @@ Discourse.Composer = Discourse.Model.extend({
       }
     }
 
+
     this.set('categoryName', opts.categoryName || this.get('topic.category.name'));
     this.set('archetypeId', opts.archetypeId || Discourse.Site.instance().get('default_archetype'));
     this.set('metaData', opts.metaData ? Em.Object.create(opts.metaData) : null);
@@ -296,6 +297,7 @@ Discourse.Composer = Discourse.Model.extend({
   },
 
   save: function(opts) {
+    debugger;
     if( !this.get('cantSubmitPost') ) {
       return this.get('editingPost') ? this.editPost(opts) : this.createPost(opts);
     }
@@ -354,6 +356,7 @@ Discourse.Composer = Discourse.Model.extend({
 
   // Create a new Post
   createPost: function(opts) {
+    debugger;
     var post = this.get('post'),
         topic = this.get('topic'),
         currentUser = Discourse.User.current(),

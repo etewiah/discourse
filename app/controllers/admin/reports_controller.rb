@@ -1,6 +1,14 @@
 require_dependency 'report'
 
-class Admin::ReportsController < Admin::AdminController
+class Admin::ReportsController < ActionController::Base
+	# Admin::AdminController
+
+ before_filter :set_headers
+
+  def set_headers
+    response.headers["Access-Control-Allow-Origin"] = '*'
+  end
+
 
   def show
 
@@ -14,4 +22,9 @@ class Admin::ReportsController < Admin::AdminController
     render_json_dump(report: report)
   end
 
+  def render_json_dump(obj)
+    render json: MultiJson.dump(obj)
+  end
+
+  
 end

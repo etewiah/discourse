@@ -22,12 +22,16 @@ Discourse::Application.routes.draw do
   end
   get 'srv/status' => 'forums#status'
 
+  namespace :admin do 
+    get 'reports/:type' => 'reports#show'
+  end
+
   namespace :admin, constraints: StaffConstraint.new do
     get '' => 'admin#index'
 
     resources :site_settings, constraints: AdminConstraint.new
 
-    get 'reports/:type' => 'reports#show'
+    # get 'reports/:type' => 'reports#show'
 
     resources :groups, constraints: AdminConstraint.new do
       collection do
@@ -245,6 +249,12 @@ Discourse::Application.routes.draw do
   delete 'draft' => 'draft#destroy'
 
   get 'robots.txt' => 'robots_txt#index'
+
+
+  namespace :ed do 
+    resources :posts
+  end
+
 
   [:latest, :hot, :unread, :new, :favorited, :read, :posted].each do |filter|
     root to: "list##{filter}", constraints: HomePageConstraint.new("#{filter}")

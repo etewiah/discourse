@@ -43,5 +43,24 @@ Discourse::Application.configure do
 
   require 'middleware/turbo_dev'
   config.middleware.insert 0, Middleware::TurboDev
+
+
+  # allows Cross-origin resource sharing (CORS) for API access in JavaScript (default to false for security).
+  # See the initializer and https://github.com/cyu/rack-cors for configuration documentation.
+  #
+  config.enable_rack_cors = true
+  config.rack_cors_origins = ['*']
+  config.rack_cors_resource = ['*', { :headers => :any, :methods => [:get, :post, :options] }]
+
+  # https://coderwall.com/p/rq2qlg
+  # if ENV['ENABLE_REMOTE_DEBUGGER_UNDER_POW'] && Debugger
+  if Debugger
+    Debugger.settings[:autoeval] = true
+    Debugger.settings[:autolist] = 1
+    Debugger.settings[:reload_source_on_change] = true
+    Debugger.start_remote
+  end
+
+
 end
 

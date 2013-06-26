@@ -225,6 +225,7 @@ Discourse.TopicController = Discourse.ObjectController.extend(Discourse.Selected
 
   loadPosts: function(opts) {
     var topicController = this;
+    debugger;
     this.get('content').loadPosts(opts).then(function () {
       Em.run.scheduleOnce('afterRender', topicController, 'updateBottomBar');
     });

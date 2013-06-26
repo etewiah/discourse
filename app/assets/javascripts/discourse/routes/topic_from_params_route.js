@@ -9,6 +9,7 @@
 Discourse.TopicFromParamsRoute = Discourse.Route.extend({
 
   setupController: function(controller, params) {
+    debugger;
     params = params || {};
     params.trackVisit = true;
 
