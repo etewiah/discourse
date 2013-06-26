@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  description: MyString
+  start_slot: MyString
+  when: 2013-06-26 20:26:08
+  end_slot: MyString
+  address: MyString
+  coordinates: 
+  meta: 
+  json_details: MyText
+  source: MyString
+
+two:
+  title: MyString
+  description: MyString
+  start_slot: MyString
+  when: 2013-06-26 20:26:08
+  end_slot: MyString
+  address: MyString
+  coordinates: 
+  meta: 
+  json_details: MyText
+  source: MyString
