@@ -45,7 +45,7 @@ Discourse.FilteredListRoute = Discourse.Route.extend({
   }
 });
 
-Discourse.ListController.filters.each(function(filter) {
+Discourse.ListController.filters.forEach(function(filter) {
   Discourse["List" + (filter.capitalize()) + "Route"] = Discourse.FilteredListRoute.extend({ filter: filter });
 });
 

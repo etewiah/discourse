@@ -126,11 +126,19 @@ Discourse.TopicController = Discourse.ObjectController.extend(Discourse.Selected
   },
 
   jumpTop: function() {
-    Discourse.URL.routeTo(this.get('content.url'));
+    if (this.get('bestOf')) {
+      Discourse.TopicView.scrollTo(this.get('id'), this.get('posts')[0].get('post_number'));
+    } else {
+      Discourse.URL.routeTo(this.get('url'));
+    }
   },
 
   jumpBottom: function() {
-    Discourse.URL.routeTo(this.get('content.lastPostUrl'));
+    if (this.get('bestOf')) {
+      Discourse.TopicView.scrollTo(this.get('id'), _.last(this.get('posts')).get('post_number'));
+    } else {
+      Discourse.URL.routeTo(this.get('lastPostUrl'));
+    }
   },
 
   cancelFilter: function() {
@@ -246,12 +254,12 @@ Discourse.TopicController = Discourse.ObjectController.extend(Discourse.Selected
     var topicController = this;
     var postFilters = this.get('postFilters');
     return Discourse.Topic.find(this.get('id'), postFilters).then(function(result) {
-      var first = result.posts.first();
+      var first = result.posts[0];
       if (first) {
         topicController.set('currentPost', first.post_number);
       }
       $('#topic-progress .solid').data('progress', false);
-      result.posts.each(function(p) {
+      _.each(result.posts,function(p) {
         // Skip the first post
         if (p.post_number === 1) return;
         posts.pushObject(Discourse.Post.create(p, topic));
@@ -422,6 +430,10 @@ Discourse.TopicController = Discourse.ObjectController.extend(Discourse.Selected
     if (onPostRendered) {
       onPostRendered(post);
     }
+  },
+
+  removeAllowedUser: function(username) {
+    this.get('model').removeAllowedUser(username);
   }
 });
 

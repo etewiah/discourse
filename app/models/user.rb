@@ -7,6 +7,7 @@ require_dependency 'discourse'
 require_dependency 'post_destroyer'
 require_dependency 'user_name_suggester'
 require_dependency 'roleable'
+require_dependency 'pretty_text'
 
 class User < ActiveRecord::Base
   include Roleable
@@ -28,6 +29,7 @@ class User < ActiveRecord::Base
   has_many :invites
   has_many :topic_links
 
+  has_one :facebook_user_info, dependent: :destroy
   has_one :twitter_user_info, dependent: :destroy
   has_one :github_user_info, dependent: :destroy
   has_one :cas_user_info, dependent: :destroy
@@ -133,7 +135,22 @@ class User < ActiveRecord::Base
   def self.find_by_username_or_email(username_or_email)
     lower_user = username_or_email.downcase
     lower_email = Email.downcase(username_or_email)
-    where("username_lower = :user or lower(username) = :user or email = :email or lower(name) = :user", user: lower_user, email: lower_email)
+
+    users =
+      if username_or_email.include?('@')
+        User.where(email: lower_email)
+      else
+        User.where(username_lower: lower_user)
+      end
+        .to_a
+
+    if users.count > 1
+      raise Discourse::TooManyMatches
+    elsif users.count == 1
+      users[0]
+    else
+      nil
+    end
   end
 
   def enqueue_welcome_message(message_type)
@@ -177,12 +194,12 @@ class User < ActiveRecord::Base
   end
 
   # Approve this user
-  def approve(approved_by)
+  def approve(approved_by, send_mail=true)
     self.approved = true
     self.approved_by = approved_by
     self.approved_at = Time.now
 
-    send_approval_email if save
+    send_approval_email if save and send_mail
   end
 
   def self.email_hash(email)
@@ -637,6 +654,8 @@ end
 #  likes_given                   :integer          default(0), not null
 #  likes_received                :integer          default(0), not null
 #  topic_reply_count             :integer          default(0), not null
+#  blocked                       :boolean          default(FALSE)
+#  dynamic_favicon               :boolean          default(FALSE), not null
 #
 # Indexes
 #

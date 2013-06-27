@@ -1,27 +1,60 @@
+/*jshint onecase:true */
+
 Discourse.Formatter = (function(){
 
-  var updateRelativeAge, autoUpdatingRelativeAge, relativeAge, relativeAgeTiny, relativeAgeMedium, relativeAgeMediumSpan, longDate;
+  var updateRelativeAge, autoUpdatingRelativeAge, relativeAge, relativeAgeTiny,
+      relativeAgeMedium, relativeAgeMediumSpan, longDate, toTitleCase,
+      shortDate;
 
-  var shortDateNoYearFormat = Ember.String.i18n("dates.short_date_no_year");
-  var longDateFormat = Ember.String.i18n("dates.long_date");
-  var shortDateFormat = Ember.String.i18n("dates.short_date");
+  shortDate = function(date){
+    return moment(date).shortDate();
+  };
+
+  // http://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
+  // TODO: locale support ?
+  toTitleCase = function toTitleCase(str)
+  {
+    return str.replace(/\w\S*/g, function(txt){
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  };
 
   longDate = function(dt) {
-    return moment(dt).format(longDateFormat);
+    if (!dt) return;
+
+    return moment(dt).longDate();
   };
 
   updateRelativeAge = function(elems) {
+    // jQuery .each
     elems.each(function(){
       var $this = $(this);
-      $this.html(relativeAge(new Date($this.data('time')), $this.data('format')));
+      $this.html(relativeAge(new Date($this.data('time')), {format: $this.data('format'), wrapInSpan: false}));
     });
   };
 
   autoUpdatingRelativeAge = function(date,options) {
+
+    if (!date) return "";
+
     options = options || {};
     var format = options.format || "tiny";
 
-    return "<span class='relative-date' data-time='" + date.getTime() + "' data-format='" + format +  "'>" + relativeAge(date, options)  + "</span>";
+    var append = "";
+
+    if(format === 'medium') {
+      append = " date";
+      if(options.leaveAgo) {
+        format = 'medium-with-ago';
+      }
+      options.wrapInSpan = false;
+    }
+
+    if (options.title) {
+      append += "' title='" + longDate(date);
+    }
+
+    return "<span class='relative-date" + append + "' data-time='" + date.getTime() + "' data-format='" + format +  "'>" + relativeAge(date, options)  + "</span>";
   };
 
 
@@ -78,7 +111,7 @@ Discourse.Formatter = (function(){
 
     var t = function(key, opts){
       return Ember.String.i18n("dates.medium" + (leaveAgo?"_with_ago":"") + "." + key, opts);
-    }
+    };
 
     switch(true){
     case(distanceInMinutes >= 1 && distanceInMinutes <= 56):
@@ -97,12 +130,12 @@ Discourse.Formatter = (function(){
       formatted = t("x_days", {count: Math.round((distanceInMinutes - 720.0) / 1440.0)});
       break;
     }
-
-    return formatted;
+    return formatted || '&mdash';
   };
 
   relativeAgeMedium = function(date, options){
     var displayDate, fiveDaysAgo, oneMinuteAgo, fullReadable, leaveAgo, val;
+    var wrapInSpan = options.wrapInSpan === false ? false : true;
 
     leaveAgo = options.leaveAgo;
     var distance = Math.round((new Date() - date) / 1000);
@@ -116,18 +149,22 @@ Discourse.Formatter = (function(){
     fiveDaysAgo = 432000;
     oneMinuteAgo = 60;
 
-    if (distance >= 0 && distance < oneMinuteAgo) {
+    if (distance < oneMinuteAgo) {
       displayDate = Em.String.i18n("now");
     } else if (distance > fiveDaysAgo) {
       if ((new Date()).getFullYear() !== date.getFullYear()) {
-        displayDate = moment(date).format(shortDateFormat);
+        displayDate = shortDate(date);
       } else {
-        displayDate = moment(date).format(shortDateNoYearFormat);
+        displayDate = moment(date).shortDateNoYear();
       }
     } else {
       displayDate = relativeAgeMediumSpan(distance, leaveAgo);
     }
-    return "<span class='date' title='" + fullReadable + "'>" + displayDate + "</span>";
+    if(wrapInSpan) {
+      return "<span class='date' title='" + fullReadable + "'>" + displayDate + "</span>";
+    } else {
+      return displayDate;
+    }
   };
 
   // mostly lifted from rails with a few amendments
@@ -139,6 +176,8 @@ Discourse.Formatter = (function(){
       return relativeAgeTiny(date, options);
     } else if (format === "medium") {
       return relativeAgeMedium(date, options);
+    } else if (format === 'medium-with-ago') {
+      return relativeAgeMedium(date, _.extend(options, {format: 'medium', leaveAgo: true}));
     }
 
     return "UNKNOWN FORMAT";
@@ -148,6 +187,8 @@ Discourse.Formatter = (function(){
     longDate: longDate,
     relativeAge: relativeAge,
     autoUpdatingRelativeAge: autoUpdatingRelativeAge,
-    updateRelativeAge: updateRelativeAge
+    updateRelativeAge: updateRelativeAge,
+    toTitleCase: toTitleCase,
+    shortDate: shortDate
   };
 })();

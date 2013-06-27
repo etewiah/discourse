@@ -106,7 +106,7 @@ Discourse.TopicView = Discourse.View.extend(Discourse.Scrolling, {
     this.resetExamineDockCache();
 
     // this happens after route exit, stuff could have trickled in
-    this.set('controller.controllers.header.showExtraInfo', false)
+    this.set('controller.controllers.header.showExtraInfo', false);
   },
 
   didInsertElement: function(e) {
@@ -127,36 +127,35 @@ Discourse.TopicView = Discourse.View.extend(Discourse.Scrolling, {
     this.updatePosition(true);
   },
 
-  debounceLoadSuggested: Discourse.debounce(function(lookup){
-    var suggested = this.get('topic.suggested_topics');
+  debounceLoadSuggested: Discourse.debounce(function(){
+    if (this.get('isDestroyed') || this.get('isDestroying')) { return; }
 
-    Discourse.TopicList.loadTopics(lookup, "").then(function(topics){
-      suggested.clear();
-      suggested.pushObjects(topics);
-    });
+    var incoming = this.get('topicTrackingState.newIncoming');
+    var suggested = this.get('topic.suggested_topics');
+    var topicId = this.get('topic.id');
+
+    if(suggested) {
+
+      var existing = _.invoke(suggested, 'get', 'id');
+
+      var lookup = _.chain(incoming)
+        .last(5)
+        .reverse()
+        .union(existing)
+        .uniq()
+        .without(topicId)
+        .first(5)
+        .value();
+
+      Discourse.TopicList.loadTopics(lookup, "").then(function(topics){
+        suggested.clear();
+        suggested.pushObjects(topics);
+      });
+    }
   }, 1000),
 
   hasNewSuggested: function(){
-    var incoming = this.get('topicTrackingState.newIncoming');
-    var suggested = this.get('topic.suggested_topics');
-
-    if(suggested) {
-      var lookup = incoming.slice(-5).reverse().unique();
-      if(lookup.length < 5) {
-        suggested.each(function(topic){
-          if (topic) {
-            lookup.push(topic.get('id'));
-            lookup = lookup.unique();
-            return lookup.length < 5;
-          }
-        });
-      }
-
-      var topicId = this.get('topic.id');
-      lookup = lookup.exclude(function(id){ return id === topicId; });
-
-      this.debounceLoadSuggested(lookup);
-    }
+    this.debounceLoadSuggested();
   }.observes('topicTrackingState.incomingCount'),
 
   // Triggered whenever any posts are rendered, debounced to save over calling
@@ -237,7 +236,7 @@ Discourse.TopicView = Discourse.View.extend(Discourse.Scrolling, {
     if (post.post_number === 1) return;
 
     // double check
-    if (this.topic && this.topic.posts && this.topic.posts.length > 0 && this.topic.posts.first().post_number !== post.post_number) return;
+    if (this.topic && this.topic.posts && this.topic.posts.length > 0 && this.topic.posts[0].post_number !== post.post_number) return;
 
     // half mutex
     if (this.get('controller.loading')) return;
@@ -251,11 +250,11 @@ Discourse.TopicView = Discourse.View.extend(Discourse.Scrolling, {
       posts = topicView.get('topic.posts');
 
       // Add a scrollTo record to the last post inserted to the DOM
-      lastPostNum = result.posts.first().post_number;
-      result.posts.each(function(p) {
+      lastPostNum = result.posts[0].post_number;
+      _.each(result.posts,function(post) {
         var newPost;
-        newPost = Discourse.Post.create(p, topicView.get('topic'));
-        if (p.post_number === lastPostNum) {
+        newPost = Discourse.Post.create(post, topicView.get('topic'));
+        if (post.post_number === lastPostNum) {
           newPost.set('scrollTo', {
             top: $(window).scrollTop(),
             height: $(document).height()
@@ -292,7 +291,7 @@ Discourse.TopicView = Discourse.View.extend(Discourse.Scrolling, {
     if (this.get('controller.seenBottom')) return;
 
     // Don't double load ever
-    if (this.topic.posts.last().post_number !== post.post_number) return;
+    if (this.topic.posts[this.topic.posts.length-1].post_number !== post.post_number) return;
     this.set('controller.loadingBelow', true);
     this.set('controller.loading', true);
     var opts = $.extend({ postsAfter: post.get('post_number') }, this.get('controller.postFilters'));
@@ -303,13 +302,13 @@ Discourse.TopicView = Discourse.View.extend(Discourse.Scrolling, {
       if (result.at_bottom || result.posts.length === 0) {
         topicView.set('controller.seenBottom', 'true');
       }
-      topic.pushPosts(result.posts.map(function(p) {
+      topic.pushPosts(_.map(result.posts,function(p) {
         return Discourse.Post.create(p, topic);
       }));
       if (result.suggested_topics) {
         var suggested = Em.A();
-        result.suggested_topics.each(function(st) {
-          suggested.pushObject(Discourse.Topic.create(st));
+        _.each(result.suggested_topics,function(topic) {
+          suggested.pushObject(Discourse.Topic.create(topic));
         });
         topicView.set('topic.suggested_topics', suggested);
       }
@@ -389,7 +388,10 @@ Discourse.TopicView = Discourse.View.extend(Discourse.Scrolling, {
 
   nonUrgentPositionUpdate: Discourse.debounce(function(opts) {
     Discourse.ScreenTrack.instance().scrolled();
-    this.set('controller.currentPost', opts.currentPost);
+    var model = this.get('controller.model');
+    if (model) {
+      this.set('controller.currentPost', opts.currentPost);
+    }
   },500),
 
   scrolled: function(){
@@ -422,8 +424,8 @@ Discourse.TopicView = Discourse.View.extend(Discourse.Scrolling, {
 
     // mark everything on screen read
     var topicView = this;
-    $.each(info.onScreen,function(){
-      var seen = topicView.postSeen($(rows[this]));
+    _.each(info.onScreen,function(item){
+      var seen = topicView.postSeen($(rows[item]));
       currentPost = currentPost || seen;
     });
 

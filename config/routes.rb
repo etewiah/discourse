@@ -14,12 +14,7 @@ Discourse::Application.routes.draw do
 
   mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint.new
 
-  resources :forums do
-    collection do
-      get 'request_access'
-      post 'request_access_submit'
-    end
-  end
+  resources :forums
   get 'srv/status' => 'forums#status'
 
   namespace :admin do 
@@ -73,7 +68,9 @@ Discourse::Application.routes.draw do
     get 'customize' => 'site_customizations#index', constraints: AdminConstraint.new
     get 'flags' => 'flags#index'
     get 'flags/:filter' => 'flags#index'
-    post 'flags/clear/:id' => 'flags#clear'
+    post 'flags/agree/:id' => 'flags#agree'
+    post 'flags/disagree/:id' => 'flags#disagree'
+    post 'flags/defer/:id' => 'flags#defer'
     resources :site_customizations, constraints: AdminConstraint.new
     resources :site_contents, constraints: AdminConstraint.new
     resources :site_content_types, constraints: AdminConstraint.new
@@ -216,6 +213,7 @@ Discourse::Application.routes.draw do
   put 't/:topic_id/mute' => 'topics#mute', constraints: {topic_id: /\d+/}
   put 't/:topic_id/unmute' => 'topics#unmute', constraints: {topic_id: /\d+/}
   put 't/:topic_id/autoclose' => 'topics#autoclose', constraints: {topic_id: /\d+/}
+  put 't/:topic_id/remove-allowed-user' => 'topics#remove_allowed_user', constraints: {topic_id: /\d+/}
 
   get 't/:topic_id/:post_number' => 'topics#show', constraints: {topic_id: /\d+/, post_number: /\d+/}
   get 't/:slug/:topic_id.rss' => 'topics#feed', format: :rss, constraints: {topic_id: /\d+/}
@@ -234,9 +232,6 @@ Discourse::Application.routes.draw do
 
   resources :invites
   delete 'invites' => 'invites#destroy'
-
-  get 'request_access' => 'request_access#new'
-  post 'request_access' => 'request_access#create'
 
   get 'onebox' => 'onebox#show'
 

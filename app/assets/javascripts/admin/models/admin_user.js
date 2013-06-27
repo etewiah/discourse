@@ -76,9 +76,9 @@ Discourse.AdminUser = Discourse.User.extend({
   }).property('admin', 'moderator'),
 
   banDuration: (function() {
-    var banned_at = Date.create(this.banned_at);
-    var banned_till = Date.create(this.banned_till);
-    return banned_at.short() + " - " + banned_till.short();
+    var banned_at = moment(this.banned_at);
+    var banned_till = moment(this.banned_till);
+    return banned_at.format('L') + " - " + banned_till.format('L');
   }).property('banned_till', 'banned_at'),
 
   ban: function() {
@@ -216,6 +216,16 @@ Discourse.AdminUser = Discourse.User.extend({
         });
       }
     });
+  },
+
+  loadDetails: function() {
+    var model = this;
+    if (model.get('loadedDetails')) { return; }
+
+    Discourse.AdminUser.find(model.get('username_lower')).then(function (result) {
+      model.setProperties(result);
+      model.set('loadedDetails', true);
+    });
   }
 
 });
@@ -223,7 +233,7 @@ Discourse.AdminUser = Discourse.User.extend({
 Discourse.AdminUser.reopenClass({
 
   bulkApprove: function(users) {
-    users.each(function(user) {
+    _.each(users, function(user) {
       user.set('approved', true);
       user.set('can_approve', false);
       return user.set('selected', false);
@@ -243,6 +253,7 @@ Discourse.AdminUser.reopenClass({
 
   find: function(username) {
     return Discourse.ajax("/admin/users/" + username).then(function (result) {
+      result.loadedDetails = true;
       return Discourse.AdminUser.create(result);
     });
   },
