@@ -1,0 +1,23 @@
+<div id='list-controls'>
+  <div class="container">
+    <ul class="nav nav-pills" id='category-filter'>
+      {{each availableNavItems itemViewClass="Discourse.NavItemView"}}
+    </ul>
+    {{!#if canCreateCategory}}
+    <button class='btn btn-default' {{action createTopicModal}}> <i class='icon icon-plus'></i>
+      Modal Create Topic
+    </button>
+    {{!/if}}
+  </div>
+</div>
+
+<div class="container">
+
+  <h1>Happenings from json</h1>
+  <section class="category-column first">
+  {{each happening in controller itemViewClass="Discourse.HappeningBoxView" }}
+  </section>
+  <section class="category-column">
+  {{each happening in controller itemViewClass="Discourse.HappeningBoxView" }}
+  </section>    
+</div>
