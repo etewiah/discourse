@@ -21,10 +21,12 @@ class Ed::HappeningsController < ApplicationController
   def show
     @happening = Happening.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @happening }
-    end
+      render json: @happening 
+    # respond_to do |format|
+    #   # format.html # show.html.erb
+    #   # format.json 
+    #   render json: @happening 
+    # end
   end
 
   def create
@@ -47,9 +49,10 @@ class Ed::HappeningsController < ApplicationController
 private
 
     def create_params
-      params.require(:title)
-      params.permit(
-          :title)
+      params.require(:happening).permit(:title, :json_details)
+      # params.require(:title)
+      # params.permit(
+      #     :title)
     end
 
 end

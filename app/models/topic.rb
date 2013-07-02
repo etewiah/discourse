@@ -52,6 +52,9 @@ class Topic < ActiveRecord::Base
 
   serialize :meta_data, ActiveRecord::Coders::Hstore
 
+  # Ed: Added 
+  belongs_to :happening
+
   belongs_to :category
   has_many :posts
   has_many :topic_allowed_users
