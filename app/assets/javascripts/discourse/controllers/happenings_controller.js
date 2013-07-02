@@ -56,6 +56,8 @@ Discourse.HappeningsController = Ember.ArrayController.extend({
 
   load: function(subreddit) {
 
+      var save_bulk = this.save;
+
       var url = "/data/madrid.json";
       return $.getJSON(url).then(function (response) {
           var links = [];
@@ -84,8 +86,27 @@ Discourse.HappeningsController = Ember.ArrayController.extend({
           });
          return links; 
       });
-  }
+  },
 
+  save: function(args) {
+    var url = "/categories";
+    if (this.get('id')) {
+      url = "/categories/" + (this.get('id'));
+    }
+
+    return Discourse.ajax(url, {
+      data: {
+        name: this.get('name'),
+        color: this.get('color'),
+        text_color: this.get('text_color'),
+        hotness: this.get('hotness'),
+        secure: this.get('secure'),
+        group_names: this.get('groups').join(","),
+        auto_close_days: this.get('auto_close_days')
+      },
+      type: this.get('id') ? 'PUT' : 'POST'
+    });
+  }
 
 
 });

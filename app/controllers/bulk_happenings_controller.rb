@@ -1,0 +1,2 @@
+class BulkHappeningsController < ApplicationController
+end

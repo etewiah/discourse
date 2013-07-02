@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  when_retrieved: 2013-07-02 20:21:00
+  raw_json: MyText
+  source: MyString
+
+two:
+  title: MyString
+  when_retrieved: 2013-07-02 20:21:00
+  raw_json: MyText
+  source: MyString
