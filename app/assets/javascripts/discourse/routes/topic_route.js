@@ -60,7 +60,6 @@ Discourse.TopicRoute = Discourse.Route.extend({
   },
 
   model: function(params) {
-    debugger;
     var currentModel, _ref;
     if (currentModel = (_ref = this.controllerFor('topic')) ? _ref.get('content') : void 0) {
       if (currentModel.get('id') === parseInt(params.id, 10)) {

@@ -40,7 +40,6 @@ Discourse.FilteredListRoute = Discourse.Route.extend({
       listController.set('category', null);
       listController.set('canCreateTopic', topicList.get('can_create_topic'));
       listTopicsController.set('content', topicList);
-      debugger;
     });
   }
 });

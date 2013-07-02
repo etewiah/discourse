@@ -1,13 +1,12 @@
 require_dependency 'report'
 
-class Admin::ReportsController < ActionController::Base
-	# Admin::AdminController
+class Admin::ReportsController < Admin::AdminController
 
- before_filter :set_headers
+ # before_filter :set_headers
 
-  def set_headers
-    response.headers["Access-Control-Allow-Origin"] = '*'
-  end
+ #  def set_headers
+ #    response.headers["Access-Control-Allow-Origin"] = '*'
+ #  end
 
 
   def show
