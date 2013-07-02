@@ -2,6 +2,10 @@ class StaticController < ApplicationController
 
   skip_before_filter :check_xhr, :redirect_to_login_if_required
 
+  # Ed: added index to use as dummy page for js only pages
+  def index
+  end
+
   def show
 
     map = {

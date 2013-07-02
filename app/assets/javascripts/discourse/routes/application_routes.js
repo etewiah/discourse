@@ -7,6 +7,15 @@
 Discourse.Route.buildRoutes(function() {
   var router = this;
 
+
+  // Happening routes;
+  this.resource('happenings');
+  this.resource('happening', { path: '/happening'}, function() {
+    this.route('show', { path: '/:id'});
+  });
+
+
+
   // Topic routes
   this.resource('topic', { path: '/t/:slug/:id' }, function() {
     this.route('fromParams', { path: '/' });
