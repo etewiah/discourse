@@ -40,37 +40,27 @@ Discourse.HappeningsController = Ember.ArrayController.extend({
   }.property(),
 
 
-  categoriesEven: function() {
-    debugger;
-    if (this.blank('categories')) return Em.A();
+  happeningsOdd: function() {
+      var content = this.get('content');
 
-    return this.get('categories').filter(function(item, index) {
-      return (index % 2) === 0;
-    });
-  }.property('categories.@each'),
+      // if (!content || !this.get('hideInactive'))
+      //     return content;
 
 
-     happeningsOdd: function() {
-        var content = this.get('content');
+      // if (this.blank('categories')) return Em.A();
+      return content.filter(function(item, index) {
+        return (index % 2) === 1;
+      });
 
-        // if (!content || !this.get('hideInactive'))
-        //     return content;
-
-
-        // if (this.blank('categories')) return Em.A();
-        return content.filter(function(item, index) {
-          return (index % 2) === 1;
-        });
-
-    }.property('content.isLoaded'),
+  }.property('content.isLoaded'),
 // Ed: TODO: figure out what dif 'content.isLoaded' makes
-     happeningsEven: function() {
-        var content = this.get('content');
+   happeningsEven: function() {
+      var content = this.get('content');
 
-        return content.filter(function(item, index) {
-          return (index % 2) === 0;
-        });
-    }.property(),
+      return content.filter(function(item, index) {
+        return (index % 2) === 0;
+      });
+  }.property(),
 
   // Put in the appropriate page title based on our view
   updateTitle: function() {
