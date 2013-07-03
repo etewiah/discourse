@@ -42,7 +42,6 @@ Discourse.Happening.reopenClass({
     // });
 
     return Discourse.ajax(url).then(function(response){
-      debugger;
 
 // Ed: TODO: get directly from eventful and fallback to server if needed
         // var url = "/ed/bulk_happenings";
