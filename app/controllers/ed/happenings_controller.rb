@@ -31,28 +31,18 @@ class Ed::HappeningsController < ApplicationController
 
   def create
     @happening = Happening.new(create_params)
-
-    # respond_to do |format|
-      if @happening.save
-        # format.html { redirect_to @happening, notice: 'Happening was successfully created.' }
-        render json: @happening, status: :created
-        # , location: @happening 
-      else
-        # format.html { render action: "new" }
-        render json: @happening.errors, status: :unprocessable_entity 
-      end
-    # end
-
-
+    if @happening.save
+      render json: @happening, status: :created
+      # , location: @happening 
+    else
+      render json: @happening.errors, status: :unprocessable_entity 
+    end
   end
 
 private
 
     def create_params
       params.require(:happening).permit(:title, :json_details)
-      # params.require(:title)
-      # params.permit(
-      #     :title)
     end
 
 end

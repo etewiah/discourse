@@ -57,54 +57,66 @@ Discourse.HappeningsController = Ember.ArrayController.extend({
   load: function(subreddit) {
 
       var save_bulk = this.save;
+      var parent = this;
+
+debugger;
 
       var url = "/data/madrid.json";
-      return $.getJSON(url).then(function (response) {
-          var links = [];
-          $(response.events.event).each(function() {  
+
+
+    // return Discourse.ajax("/posts/" + (this.get('id')) + "/replies").then(function(loaded) {
+    //   var replies = parent.get('replies');
+    //   _.each(loaded,function(reply) {
+    //     var post = Discourse.Post.create(reply);
+    //     post.set('topic', parent.get('topic'));
+    //     replies.pushObject(post);
+    //   });
+    //   parent.set('loadingReplies', false);
+    // });
+
+    return Discourse.ajax(url).then(function(response){
+      debugger;
+    });
+
+
+      // return $.getJSON(url).then(function (response) {
+      //     var links = [];
+      //     $(response.events.event).each(function() {  
              
                
-                var happeningResource = Discourse.Happening.create({
-                  title: this.title,
-                  // description: this.description,
-                  origin: "last_fm",
-                  start_date: this.startDate,
-                  external_urls: [ {url: this.url, trait: "source" }],
-                  json_details: JSON.stringify(this)
-                });
+      //           var happeningResource = Discourse.Happening.create({
+      //             title: this.title,
+      //             // description: this.description,
+      //             origin: "last_fm",
+      //             start_date: this.startDate,
+      //             external_urls: [ {url: this.url, trait: "source" }],
+      //             json_details: JSON.stringify(this)
+      //           });
 
-                if (this.image[1]['#text']){
-                  var pictures = [{
-                    alt: "medium",
-                    url: this.image[1]['#text']
-                  }];
-                  happeningResource.set('pics', pictures);
-                  // happeningResource.set('description', pictures);
-                  // happeningResource.set('traits', pictures)
-                }
-            links.push(happeningResource);
-          });
-         return links; 
-      });
+      //           if (this.image[1]['#text']){
+      //             var pictures = [{
+      //               alt: "medium",
+      //               url: this.image[1]['#text']
+      //             }];
+      //             happeningResource.set('pics', pictures);
+      //             // happeningResource.set('description', pictures);
+      //             // happeningResource.set('traits', pictures)
+      //           }
+      //       links.push(happeningResource);
+      //     });
+      //    return links; 
+      // });
   },
 
-  save: function(args) {
-    var url = "/categories";
-    if (this.get('id')) {
-      url = "/categories/" + (this.get('id'));
-    }
+  save: function(raw_json) {
+    var url = "/ed/bulk_happenings";
 
     return Discourse.ajax(url, {
       data: {
-        name: this.get('name'),
-        color: this.get('color'),
-        text_color: this.get('text_color'),
-        hotness: this.get('hotness'),
-        secure: this.get('secure'),
-        group_names: this.get('groups').join(","),
-        auto_close_days: this.get('auto_close_days')
+        title: "first",
+        raw_json: raw_json
       },
-      type: this.get('id') ? 'PUT' : 'POST'
+      type: 'POST'
     });
   }
 

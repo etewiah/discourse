@@ -10,13 +10,12 @@ USERNAME_ROUTE_FORMAT = /[A-Za-z0-9\_]+/ unless defined? USERNAME_ROUTE_FORMAT
 
 Discourse::Application.routes.draw do
 
-  resources :bulk_happenings
-
-
   get 'happenings' => 'static#index'
 
   namespace :ed do
     resources :happenings
+    resources :bulk_happenings
+
   end
 
   match "/404", to: "exceptions#not_found"

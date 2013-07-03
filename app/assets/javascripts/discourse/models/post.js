@@ -237,7 +237,7 @@ Discourse.Post = Discourse.Model.extend({
   loadReplies: function() {
     this.set('loadingReplies', true);
     this.set('replies', []);
-
+debugger;
     var parent = this;
     return Discourse.ajax("/posts/" + (this.get('id')) + "/replies").then(function(loaded) {
       var replies = parent.get('replies');
