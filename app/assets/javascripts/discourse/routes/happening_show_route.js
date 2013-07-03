@@ -1,5 +1,13 @@
 Discourse.HappeningShowRoute = Ember.Route.extend({
 
+  activate: function() {
+    // debugger;
+  },
+
+  deactivate: function() {
+    // debugger;
+  },
+
 
   model: function(params) {
     // var record = App.Project.find(params.project_id);
@@ -24,7 +32,7 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
 // needed to ensure transitionToRoute works
   serialize: function(model) {
     return model;  
-  }
+  },
 
   // setupController: function(controller, model) {
   //   // var result = Ember.Object.create({title: "11111", isLoaded: true});
@@ -34,6 +42,14 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
   //   // this.controllerFor('activedataset.index').set('content', App.ActiveDataSet.findAll(model.id));
   // }
 
+  setupController: function(controller, model) {
+    controller.set('model', model)
+    if( model.get('loaded_from_remote'))
+    {
+      model.save().then(function(result){
+      });
+    }
+  }
 
   //   renderTemplate: function() {
   //    // debugger;

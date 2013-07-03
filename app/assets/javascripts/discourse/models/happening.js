@@ -27,7 +27,9 @@ Discourse.Happening = Discourse.Model.extend({
         happening: {
           title: this.get('title'),
           json_details: this.get('json_details'),
-          start_date: this.get('start_date')
+          start_date: this.get('start_date'),
+          meta: this.get('meta'),
+          source: this.get('source')
         }
       },
       type: this.get('id') ? 'PUT' : 'POST'
@@ -79,11 +81,13 @@ Discourse.Happening.reopenClass({
                 var happeningResource = Discourse.Happening.create({
                   title: this.title,
                   // description: this.description,
-                  origin: "last_fm",
+                  meta: this.id,
+                  source: "last_fm",
                   start_date: this.startDate,
                   external_urls: [ {url: this.url, trait: "source" }],
                   json_details: JSON.stringify(this),
-                  id: ""
+                  id: "",
+                  loaded_from_remote: true
                 });
 
                 if (this.image[1]['#text']){
@@ -122,6 +126,7 @@ Discourse.Happening.reopenClass({
   // }
   find: function(id) {
     return Discourse.ajax("/ed/happenings/" + id + ".json").then(function (result) {
+      debugger;
       return Discourse.Happening.create(result.happening);
     });
   }

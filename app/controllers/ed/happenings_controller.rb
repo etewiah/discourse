@@ -30,7 +30,10 @@ class Ed::HappeningsController < ApplicationController
   end
 
   def create
-    @happening = Happening.new(create_params)
+
+    # User.where(:first_name => 'Scarlett').first_or_create(:last_name => 'Johansson')
+    @happening = Happening.where(:source => params[:happening][:source], :meta => params[:happening][:meta]).first_or_initialize(create_params)
+    # @happening = Happening.new(create_params)
     if @happening.save
       render json: @happening, status: :created
       # , location: @happening 
@@ -42,7 +45,7 @@ class Ed::HappeningsController < ApplicationController
 private
 
     def create_params
-      params.require(:happening).permit(:title, :json_details, :start_date)
+      params.require(:happening).permit(:title, :json_details, :start_date, :source, :meta)
     end
 
 end
