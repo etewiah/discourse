@@ -17,6 +17,23 @@ Discourse.Happening = Discourse.Model.extend({
   // json_details: DS.attr('string'),
   // topics: DS.hasMany('Discourse.HappeningTopic')
 
+  save: function(args) {
+    var url = "/ed/happenings";
+    if (this.get('id')) {
+      url = "/ed/happenings/" + (this.get('id'));
+    }
+    return Discourse.ajax(url, {
+      data: {
+        happening: {
+          title: this.get('title'),
+          json_details: this.get('json_details'),
+          start_date: this.get('start_date')
+        }
+      },
+      type: this.get('id') ? 'PUT' : 'POST'
+    });
+  }
+
 });
 
 Discourse.Happening.reopenClass({
@@ -65,7 +82,8 @@ Discourse.Happening.reopenClass({
                   origin: "last_fm",
                   start_date: this.startDate,
                   external_urls: [ {url: this.url, trait: "source" }],
-                  json_details: JSON.stringify(this)
+                  json_details: JSON.stringify(this),
+                  id: ""
                 });
 
                 if (this.image[1]['#text']){
@@ -85,16 +103,29 @@ Discourse.Happening.reopenClass({
 
   },
 
-  save: function(raw_json) {
-    var url = "/ed/bulk_happenings";
+  // save: function(raw_json) {
+  //   var url = "/ed/bulk_happenings";
 
-    return Discourse.ajax(url, {
-      data: {
-        title: "first",
-        raw_json: raw_json
-      },
-      type: 'POST'
+  //   return Discourse.ajax(url, {
+  //     data: {
+  //       title: "first",
+  //       raw_json: raw_json
+  //     },
+  //     type: 'POST'
+  //   });
+  // },
+
+  // findBySlugOrId: function(slugOrId) {
+  //   return Discourse.ajax("/categories/" + slugOrId + ".json").then(function (result) {
+  //     return Discourse.Category.create(result.category);
+  //   });
+  // }
+  find: function(id) {
+    return Discourse.ajax("/ed/happenings/" + id + ".json").then(function (result) {
+      return Discourse.Happening.create(result.happening);
     });
   }
+
+
 
 });

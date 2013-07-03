@@ -42,7 +42,7 @@ class Ed::HappeningsController < ApplicationController
 private
 
     def create_params
-      params.require(:happening).permit(:title, :json_details)
+      params.require(:happening).permit(:title, :json_details, :start_date)
     end
 
 end

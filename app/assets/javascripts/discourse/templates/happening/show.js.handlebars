@@ -1,0 +1,32 @@
+details of a happening
+{{sometitle}}
+....
+<table id="happening-list">
+<tbody>
+  <tr>
+    <th class="num">{{content.title}}</th>
+    <th class="num">Age</th>
+  </tr>
+  <tr>
+    <td>
+       <a {{bindAttr href="url"}} target="_blank">{{origin}}</a>
+
+    {{#if pics}}
+      {{#each pic in pics }}
+      <img {{bindAttr src="pic.url"}}>  
+      {{/each}}
+    {{/if}}
+      <td></tr>
+
+    </tbody>
+  </table>
+  <footer class="clearfix">
+    <figure title="topics posted in the last 365 days">
+      <span class="number" title="2">2</span>
+      <figcaption>year</figcaption>
+    </figure>
+    <a href="#" data-ember-action="22" class="btn btn-small">edit</a>
+    <button class='btn btn-primary btn-small' {{action createTopicModal happening}}> 
+      Talk about this
+    </button>
+  </footer>

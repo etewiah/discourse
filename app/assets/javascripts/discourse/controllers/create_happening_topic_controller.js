@@ -2,6 +2,8 @@
 Discourse.CreateHappeningTopicController =  Discourse.Controller.extend({
 
    createHappeningTopic: function() {
+      var createHappeningTopicController = this;
+      this.set('saving', true);
       // relies on:
       // http://wjlroe.github.io/2013/06/06/ember-transition-to-new-model-hack.html
       // saveTheWidget: function() {
@@ -14,25 +16,27 @@ Discourse.CreateHappeningTopicController =  Discourse.Controller.extend({
       //   this.transitionToRoute('widgets.show', model);
       // }
 
-      debugger;
       happening  = this.get('model');
       // var model = App.Widget.createRecord({name: "special_widget"});
 
-      happening.addObserver('id', this, this.happeningCreated);
+      // happening.addObserver('id', this, this.happeningCreated);
 
-      // can't get id from methods below so using addObserver as above
-      // happening.one('didCreate', function() {
-      //   debugger;
-      // });
+      happening.save().then(function(result) {
+        // success
 
-      // happening.one('didCommit', function() {
-      //   debugger;
-      //   // this.transitionToRoute('widgets.show', happening);
-      // });
+      debugger;
+        createHappeningTopicController.send('closeModal');
+        createHappeningTopicController.transitionToRoute('happening.show', happening);
 
-      // happening.get('store').commit();
-      // above saves all pending happenings...
-      happening.save();
+        // Discourse.URL.redirectTo("/happening/" + "1");
+            //Discourse.Category.slugFor(result.category));
+      }, function(errors) {
+        // errors
+      debugger;
+        if(errors.length === 0) errors.push(Em.String.i18n("category.creation_error"));
+        createHappeningTopicController.displayErrors(errors);
+        createHappeningTopicController.set('saving', false);
+      });
     }
 
 
