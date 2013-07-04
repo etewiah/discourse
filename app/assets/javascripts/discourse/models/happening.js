@@ -126,7 +126,6 @@ Discourse.Happening.reopenClass({
   // }
   find: function(id) {
     return Discourse.ajax("/ed/happenings/" + id + ".json").then(function (result) {
-      debugger;
       return Discourse.Happening.create(result.happening);
     });
   }

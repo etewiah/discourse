@@ -45,7 +45,9 @@ Discourse.FilteredListRoute = Discourse.Route.extend({
 });
 
 Discourse.ListController.filters.forEach(function(filter) {
-  Discourse["List" + (filter.capitalize()) + "Route"] = Discourse.FilteredListRoute.extend({ filter: filter });
+  if(filter !== "happenings"){
+    Discourse["List" + (filter.capitalize()) + "Route"] = Discourse.FilteredListRoute.extend({ filter: filter });
+  }
 });
 
 

@@ -49,7 +49,14 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
       model.save().then(function(result){
       });
     }
-  }
+  },
+
+  // renderTemplate: function() {
+  //   this.render('happenings', {
+  //     into: 'list.list', 
+  //     outlet: 'listView'
+  //   });
+  // }
 
   //   renderTemplate: function() {
   //    // debugger;

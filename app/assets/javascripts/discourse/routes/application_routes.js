@@ -42,7 +42,7 @@ Discourse.Route.buildRoutes(function() {
     var settings = Discourse.SiteSettings || PreloadStore.get('siteSettings');
     var homepage = settings.top_menu.split("|")[0].split(",")[0];
     this.route(homepage, { path: '/' });
-
+// debugger;
     this.route('categories', { path: '/categories' });
     this.route('category', { path: '/category/:slug/more' });
     this.route('category', { path: '/category/:slug' });
