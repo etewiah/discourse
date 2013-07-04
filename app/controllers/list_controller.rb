@@ -1,6 +1,6 @@
 class ListController < ApplicationController
 
-  before_filter :ensure_logged_in, except: [:latest, :hot, :category, :category_feed]
+  before_filter :ensure_logged_in, except: [:happenings, :latest, :hot, :category, :category_feed]
   before_filter :set_category, only: [:category, :category_feed]
   skip_before_filter :check_xhr
 
@@ -13,6 +13,10 @@ class ListController < ApplicationController
 
       respond(list)
     end
+  end
+
+  def happenings
+    render "static/index"
   end
 
   def category

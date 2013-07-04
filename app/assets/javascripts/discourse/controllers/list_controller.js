@@ -115,5 +115,5 @@ Discourse.ListController = Discourse.Controller.extend({
 });
 
 Discourse.ListController.reopenClass({
-  filters: ['latest', 'hot', 'favorited', 'read', 'unread', 'new', 'posted']
+  filters: ['happening', 'latest', 'hot', 'favorited', 'read', 'unread', 'new', 'posted']
 });

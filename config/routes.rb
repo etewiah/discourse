@@ -16,7 +16,7 @@ Discourse::Application.routes.draw do
   namespace :ed do
     resources :happenings
     resources :bulk_happenings
-
+    resources :posts
   end
 
   match "/404", to: "exceptions#not_found"
@@ -255,12 +255,8 @@ Discourse::Application.routes.draw do
   get 'robots.txt' => 'robots_txt#index'
 
 
-  namespace :ed do 
-    resources :posts
-  end
 
-
-  [:latest, :hot, :unread, :new, :favorited, :read, :posted].each do |filter|
+  [:happenings, :latest, :hot, :unread, :new, :favorited, :read, :posted].each do |filter|
     root to: "list##{filter}", constraints: HomePageConstraint.new("#{filter}")
   end
   # special case for categories

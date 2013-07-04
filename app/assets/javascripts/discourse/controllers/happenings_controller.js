@@ -8,29 +8,26 @@ Discourse.HappeningsController = Ember.ArrayController.extend({
   // // needs: ['composer', 'modal', 'listTopics'],
   // needs: ['composer','listTopics'],
 
-  // categoriesEven: function() {
-  //   debugger;
-  //   if (this.blank('categories')) return Em.A();
 
-  //   return this.get('categories').filter(function(item, index) {
-  //     return (index % 2) === 0;
+  // availableNavItems: function() {
+  //   var summary = this.get('filterSummary');
+  //   var loggedOn = false;
+  //   // !!Discourse.User.current();
+  //   // return Discourse.SiteSettings.top_menu.split("|").map(function(i) {
+  //   return "music|meetups".split("|").map(function(i) {
+  //     return Discourse.NavItem.fromText(i, {
+  //       loggedOn: loggedOn
+  //     });
+  //   }).filter(function(i) {
+  //     return i !== null;
   //   });
-  // }.property('categories.@each'),
-
-  // categoriesOdd: function() {
-  //   if (this.blank('categories')) return Em.A();
-  //   return this.get('categories').filter(function(item, index) {
-  //     return (index % 2) === 1;
-  //   });
-  // }.property('categories.@each'),
+  // }.property(),
 
 
   availableNavItems: function() {
-    var summary = this.get('filterSummary');
-    var loggedOn = false;
-    // !!Discourse.User.current();
-    // return Discourse.SiteSettings.top_menu.split("|").map(function(i) {
-    return "music|meetups".split("|").map(function(i) {
+    var loggedOn = !!Discourse.User.current();
+
+    return Discourse.SiteSettings.top_menu.split("|").map(function(i) {
       return Discourse.NavItem.fromText(i, {
         loggedOn: loggedOn
       });

@@ -10,7 +10,6 @@ Discourse.ListCategoriesController = Discourse.ObjectController.extend({
   needs: ['modal'],
 
   categoriesEven: function() {
-debugger;
     if (this.blank('categories')) return Em.A();
 
     return this.get('categories').filter(function(item, index) {

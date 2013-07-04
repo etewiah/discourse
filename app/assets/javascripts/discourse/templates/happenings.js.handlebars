@@ -3,17 +3,25 @@
     <ul class="nav nav-pills" id='category-filter'>
       {{each availableNavItems itemViewClass="Discourse.NavItemView"}}
     </ul>
-    {{!#if canCreateCategory}}
-    <button class='btn btn-default' {{action createTopicModal}}> <i class='icon icon-plus'></i>
-      Modal Create Topic
-    </button>
-    {{!/if}}
+
+    {{#if canCreateTopic}}
+      <button class='btn btn-default' {{action createTopic}}><i class='icon icon-plus'></i>{{view.createTopicText}}</button>
+    {{/if}}
+
+    {{#if canEditCategory}}
+      <button class='btn btn-default' {{action editCategory category}}>{{i18n category.edit_long}}</button>
+    {{/if}}
+
+    {{#if canCreateCategory}}
+      <button class='btn btn-default' {{action createCategory}}><i class='icon icon-plus'></i>{{i18n category.create}}</button>
+    {{/if}}
+
   </div>
 </div>
 
+
 <div class="container">
 
-  <h1>Happenings from json</h1>
 
   <section class="category-column">
   {{each happening in happeningsOdd itemViewClass="Discourse.HappeningBoxView" }}
