@@ -12,7 +12,7 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
   model: function(params) {
     // var record = App.Project.find(params.project_id);
     var happeningController = this.controllerFor('happeningShow');
-    if (happeningController) happeningController.set('filterMode', "music");
+    if (happeningController) happeningController.set('filterMode', "happenings");
     // return Discourse.Happening.getFromLastfm();
     // debugger;
     var record = Discourse.Happening.find(params.id);

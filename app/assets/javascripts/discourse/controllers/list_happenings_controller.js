@@ -38,7 +38,6 @@ Discourse.ListHappeningsController = Ember.ArrayController.extend({
 
 
   happeningsOdd: function() {
-    debugger;
       var content = this.get('content');
 
       // if (!content || !this.get('hideInactive'))
@@ -52,8 +51,9 @@ Discourse.ListHappeningsController = Ember.ArrayController.extend({
   }.property('content.isLoaded'),
 
 // Ed: TODO: figure out what dif 'content.isLoaded' makes
+// I think the above gets called again when I navigate back client side.....
+
    happeningsEven: function() {
-  debugger;
       var content = this.get('content');
 
       return content.filter(function(item, index) {

@@ -44,8 +44,9 @@ Discourse.ListHappeningsRoute = Ember.Route.extend({
   },
 
   model: function() {
-    var happeningsController = this.controllerFor('happenings');
-    if (happeningsController) happeningsController.set('filterMode', "music");
+    var happeningsController = this.controllerFor('listHappenings');
+    // below is used by nav_item_view to calculate which tab is active:
+    if (happeningsController) happeningsController.set('filterMode', "happenings");
     // return Discourse.Happening.getFromLastfm();
     // debugger;
     // var happeningsModel = this.modelFor('happening');

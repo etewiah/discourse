@@ -1,12 +1,12 @@
 /**
   This view handles rendering of a navigation item
 
-  @class NavItemView
+  @class NavItemSideView
   @extends Discourse.View
   @namespace Discourse
   @module Discourse
 **/
-Discourse.NavItemView = Discourse.View.extend({
+Discourse.NavItemSideView = Discourse.View.extend({
   tagName: 'li',
   classNameBindings: ['isActive', 'content.hasIcon:has-icon'],
   attributeBindings: ['title'],

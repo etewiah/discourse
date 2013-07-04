@@ -950,6 +950,9 @@ en:
     categories_list: "Categories List"
 
     filters:
+      happenings:
+        title: "What's happening?"
+        help: "find fun events"
       latest:
         title: "Latest"
         help: "the most recent topics"
