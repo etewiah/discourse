@@ -16,6 +16,9 @@ Discourse.HappeningInCityRoute = Ember.Route.extend({
     // // below is used by nav_item_view to calculate which tab is active:
     // if (happeningsController) happeningsController.set('filterMode', "happenings");
 
+    // Ed: below is the only way I have found to be able to set the city so I can 
+    // retrieve it again in another method (if I need to get happenings from remote api..)
+    Discourse.Happening.happeningCity = params.city;
     return Discourse.Happening.load(params.city);
     // happeningsController.load();
   },

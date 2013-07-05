@@ -29,66 +29,57 @@ Discourse.Happening = Discourse.Model.extend({
           json_details: this.get('json_details'),
           start_date: this.get('start_date'),
           meta: this.get('meta'),
-          source: this.get('source')
+          source: this.get('source'),
+          city: this.get('city'),
+          country: this.get('country')
         }
       },
       type: this.get('id') ? 'PUT' : 'POST'
     });
+  },
+
+  saveBulk: function(args) {
+debugger;
+    var url = "/ed/bulk_happenings";
+    Discourse.ajax(url, {
+      data: {
+          title: "Barcelona",
+          raw_json: JSON.stringify(response),
+          source: "last_fm"
+      },
+      type:  'POST'
+    });
+
   }
 
 });
 
 Discourse.Happening.reopenClass({
 
-    load: function(city) {
+    happeningCity: "",
 
-      // var save_bulk = this.save;
-      // var parent = this;
-
-
-      var url = "/ed/bulk_happenings/" + city + ".json";
-      //"http://ws.audioscrobbler.com/2.0/?method=geo.getevents&location=barcelona&api_key=11c7b0fa1ebea56f97d90b605e6ace2e&format=json"
-      //"/ed/bulk_happenings/madrid.json"; 
-      // "/data/madrid.json";
-
-
-    // return Discourse.ajax("/posts/" + (this.get('id')) + "/replies").then(function(loaded) {
-    //   var replies = parent.get('replies');
-    //   _.each(loaded,function(reply) {
-    //     var post = Discourse.Post.create(reply);
-    //     post.set('topic', parent.get('topic'));
-    //     replies.pushObject(post);
-    //   });
-    //   parent.set('loadingReplies', false);
-    // });
-
-    return Discourse.ajax(url).then(function(response){
-
-// Ed: TODO: get directly from eventful and fallback to server if needed
-        // var url = "/ed/bulk_happenings";
-
-        // Discourse.ajax(url, {
-        //   data: {
-        //     title: "first",
-        //     raw_json: JSON.stringify(response)
-        //   },
-        //   type: 'POST'
-        // });
+    loadFromRemote: function() {
+      var url = "http://ws.audioscrobbler.com/2.0/?method=geo.getevents&location="
+      + Discourse.Happening.happeningCity.toLowerCase() + "&api_key=11c7b0fa1ebea56f97d90b605e6ace2e&format=json"
+      
+      debugger;
+      return Discourse.ajax(url).then(function(response){
 
           var happenings = [];
-          var happenings_json = JSON.parse( response.bulk_happening.raw_json);
-          $(happenings_json.events.event).each(function() {  
-             
-               
+          // var happenings_json = JSON.parse( response.bulk_happening.raw_json);
+          $(response.events.event).each(function() {  
+           
                 var happeningResource = Discourse.Happening.create({
                   title: this.title,
                   // description: this.description,
                   meta: this.id,
                   source: "last_fm",
-                  start_date: this.startDate,
+                  starting_on: this.startDate,
                   external_urls: [ {url: this.url, trait: "source" }],
                   json_details: JSON.stringify(this),
                   id: "",
+                  city: this.venue.location.city,
+                  country: this.venue.location.country,
                   loaded_from_remote: true
                 });
 
@@ -103,25 +94,48 @@ Discourse.Happening.reopenClass({
                 }
             happenings.push(happeningResource);
           });
-
-// TODO: refactor this bit to a sep function
-// debugger;
-// var url = "/ed/bulk_happenings";
-// Discourse.ajax(url, {
-//       data: {
-//           title: "Barcelona",
-//           raw_json: JSON.stringify(response),
-//           source: "last_fm"
-//       },
-//       type:  'POST'
-//     });
-
-  
-//////////
-
          return happenings; 
+      });
 
-    });
+    },
+
+    load: function(city) {
+      var url = "/ed/bulk_happenings/" + city + ".json";
+      return Discourse.ajax(url).then(function(response){
+
+          if(response === null){
+            return Discourse.Happening.loadFromRemote()
+          }
+
+          var happenings = [];
+          var happenings_json = JSON.parse( response.bulk_happening.raw_json);
+          $(happenings_json.events.event).each(function() {  
+           
+                var happeningResource = Discourse.Happening.create({
+                  title: this.title,
+                  // description: this.description,
+                  meta: this.id,
+                  source: "last_fm",
+                  starting_on: this.startDate,
+                  external_urls: [ {url: this.url, trait: "source" }],
+                  json_details: JSON.stringify(this),
+                  id: "",
+                  city: this.venue.location.city,
+                  country: this.venue.location.country,
+                  loaded_from_remote: true
+                });
+
+                if (this.image[1]['#text']){
+                  var pictures = [{
+                    alt: "medium",
+                    url: this.image[1]['#text']
+                  }];
+                  happeningResource.set('pics', pictures);
+                }
+            happenings.push(happeningResource);
+          });
+         return happenings; 
+      });
 
   },
 

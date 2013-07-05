@@ -44,6 +44,9 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
 
   setupController: function(controller, model) {
     controller.set('model', model)
+    // below is a bit silly - its so side nav knows what to highlight
+    // what I really need to do is use model.city directly in the side nav
+    controller.set('happeningCity', model.city);
     if( model.get('loaded_from_remote'))
     {
       model.save().then(function(result){
