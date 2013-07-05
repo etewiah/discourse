@@ -1,9 +1,16 @@
 <div class="container">
 
-  <section class="category-column">
+  <section class="left-nav-column">
+    <ul class="nav left-nav-pills" id='category-filter'>
+      {{each navLeftItems itemViewClass="Discourse.NavLeftItemView"}}
+    </ul>
+  </section>    
+
+
+  <section class="happening-column">
   {{each happening in happeningsOdd itemViewClass="Discourse.HappeningBoxView" }}
   </section>    
-  <section class="category-column">
+  <section class="happening-column">
   {{each happening in happeningsEven itemViewClass="Discourse.HappeningBoxView" }}
   </section>  
 </div>

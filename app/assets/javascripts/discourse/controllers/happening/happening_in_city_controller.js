@@ -1,5 +1,5 @@
 
-Discourse.ListHappeningsController = Ember.ArrayController.extend({
+Discourse.HappeningInCityController = Ember.ArrayController.extend({
 // Discourse.Controller.extend({
   // categoryBinding: 'topicList.category',
   // canCreateCategory: false,

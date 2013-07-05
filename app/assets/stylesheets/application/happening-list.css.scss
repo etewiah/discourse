@@ -157,20 +157,22 @@
   }
 }
 
-// Category list
+// Ed: created this based on Category list 
+// changed widths from 550, 493 and 470 to 450, 393 and 370
+// Happening list
 // --------------------------------------------------
 
-.category-column {
+.happening-column {
   float: left;
-  width: 550px;
+  width: 450px;
   &.first {
     margin-right: 10px;
   }
 }
 
 @include medium-width {
-  .category-column {
-    width: 493px;
+  .happening-column {
+    width: 393px;
     &.first {
       margin-right: 9px;
     }
@@ -178,8 +180,8 @@
 }
 
 @include small-width {
-  .category-column {
-    width: 470px;
+  .happening-column {
+    width: 370px;
   }
 }
 

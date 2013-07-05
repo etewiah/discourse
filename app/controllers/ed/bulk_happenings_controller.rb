@@ -1,7 +1,8 @@
 class Ed::BulkHappeningsController < ApplicationController
 
   def show
-    @bulk_happening = BulkHappening.last
+    @bulk_happening = BulkHappening.first(conditions: [ "lower(title) = ?", params[:id].downcase ])
+    # BulkHappening.where(title: params[:id]).first
     render json: @bulk_happening
   end
 

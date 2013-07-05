@@ -40,13 +40,15 @@ Discourse.Happening = Discourse.Model.extend({
 
 Discourse.Happening.reopenClass({
 
-    load: function() {
+    load: function(city) {
 
       // var save_bulk = this.save;
       // var parent = this;
 
 
-      var url = "/ed/bulk_happenings/madrid.json"; 
+      var url = "/ed/bulk_happenings/" + city + ".json";
+      //"http://ws.audioscrobbler.com/2.0/?method=geo.getevents&location=barcelona&api_key=11c7b0fa1ebea56f97d90b605e6ace2e&format=json"
+      //"/ed/bulk_happenings/madrid.json"; 
       // "/data/madrid.json";
 
 
@@ -74,7 +76,7 @@ Discourse.Happening.reopenClass({
         // });
 
           var happenings = [];
-          var happenings_json = JSON.parse( response.bulk_happening.raw_json)
+          var happenings_json = JSON.parse( response.bulk_happening.raw_json);
           $(happenings_json.events.event).each(function() {  
              
                
@@ -101,6 +103,22 @@ Discourse.Happening.reopenClass({
                 }
             happenings.push(happeningResource);
           });
+
+// TODO: refactor this bit to a sep function
+// debugger;
+// var url = "/ed/bulk_happenings";
+// Discourse.ajax(url, {
+//       data: {
+//           title: "Barcelona",
+//           raw_json: JSON.stringify(response),
+//           source: "last_fm"
+//       },
+//       type:  'POST'
+//     });
+
+  
+//////////
+
          return happenings; 
 
     });

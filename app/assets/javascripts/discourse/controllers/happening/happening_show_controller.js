@@ -11,6 +11,19 @@ Discourse.HappeningShowController =  Discourse.Controller.extend({
     }).filter(function(i) {
       return i !== null;
     });
+  }.property(),
+
+
+  navLeftItems: function() {
+    var loggedOn = !!Discourse.User.current();
+
+    return "Madrid|Barcelona".split("|").map(function(i) {
+      return Discourse.NavLeftItem.fromText(i, {
+        loggedOn: loggedOn
+      });
+    }).filter(function(i) {
+      return i !== null;
+    });
   }.property()
 
 
