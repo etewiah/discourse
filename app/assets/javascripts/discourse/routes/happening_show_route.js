@@ -10,11 +10,11 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
 
 
   model: function(params) {
-    // var record = App.Project.find(params.project_id);
-    var happeningController = this.controllerFor('happeningShow');
-    if (happeningController) happeningController.set('filterMode', "happenings");
-    // return Discourse.Happening.getFromLastfm();
-    // debugger;
+    // var happeningController = this.controllerFor('happeningShow');
+    // if (happeningController) happeningController.set('filterMode', "happenings");
+    // Ed TODO: will nest show under city so this will not be necessary:
+    // if (happeningController) happeningController.set("happeningCity", "Madrid");
+
     var record = Discourse.Happening.find(params.id);
     // happeningController.load();
     // var promise = Ember.Deferred.create();
@@ -54,12 +54,12 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
     }
   },
 
-  // renderTemplate: function() {
-  //   this.render('happenings', {
-  //     into: 'list.list', 
-  //     outlet: 'listView'
-  //   });
-  // }
+  renderTemplate: function() {
+    this.render('happening_show', {
+    });
+    this.render('happening_topic', {
+    });
+  }
 
   //   renderTemplate: function() {
   //    // debugger;

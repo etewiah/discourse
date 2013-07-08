@@ -6,8 +6,8 @@
   @namespace Discourse
   @module Discourse
 **/
-var validNavNames = ['happenings', 'latest', 'hot', 'categories', 'category', 'favorited', 'unread', 'new', 'read', 'posted'];
-var validAnon     = ['happenings', 'latest', 'hot', 'categories', 'category'];
+// var validNavNames = ['happenings', 'latest', 'hot', 'categories', 'category', 'favorited', 'unread', 'new', 'read', 'posted'];
+// var validAnon     = ['happenings', 'latest', 'hot', 'categories', 'category'];
 
 Discourse.NavLeftItem = Discourse.Model.extend({
 
@@ -30,27 +30,27 @@ Discourse.NavLeftItem = Discourse.Model.extend({
   }.property('name'),
 
   // href from this item
-  href: function() {
-    var name = this.get('name');
-    if( name.split('/')[0] === 'category' ) {
-      return Discourse.getURL("/") + 'category/' + this.get('categorySlug');
-    } else {
-      return Discourse.getURL("/") + name.replace(' ', '-');
-    }
-  }.property('name'),
+  // href: function() {
+  //   var name = this.get('name');
+  //   if( name.split('/')[0] === 'category' ) {
+  //     return Discourse.getURL("/") + 'category/' + this.get('categorySlug');
+  //   } else {
+  //     return Discourse.getURL("/") + name.replace(' ', '-');
+  //   }
+  // }.property('name'),
 
-  count: function() {
-    var state = this.get('topicTrackingState');
-    if (state) {
-      return state.lookupCount(this.get('name'));
-    }
-  }.property('topicTrackingState.messageCount'),
+  // count: function() {
+  //   var state = this.get('topicTrackingState');
+  //   if (state) {
+  //     return state.lookupCount(this.get('name'));
+  //   }
+  // }.property('topicTrackingState.messageCount'),
 
-  excludeCategory: function() {
-    if (parseInt(this.get('filters.length'), 10) > 0) {
-      return this.get('filters')[0].substring(1);
-    }
-  }.property('filters.length')
+  // excludeCategory: function() {
+  //   if (parseInt(this.get('filters.length'), 10) > 0) {
+  //     return this.get('filters')[0].substring(1);
+  //   }
+  // }.property('filters.length')
 
 
 });

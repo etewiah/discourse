@@ -36,20 +36,6 @@ Discourse.Happening = Discourse.Model.extend({
       },
       type: this.get('id') ? 'PUT' : 'POST'
     });
-  },
-
-  saveBulk: function(args) {
-debugger;
-    var url = "/ed/bulk_happenings";
-    Discourse.ajax(url, {
-      data: {
-          title: "Barcelona",
-          raw_json: JSON.stringify(response),
-          source: "last_fm"
-      },
-      type:  'POST'
-    });
-
   }
 
 });
@@ -57,13 +43,34 @@ debugger;
 Discourse.Happening.reopenClass({
 
     happeningCity: "",
+    bulk_happenings_raw_json: "",
+    pendingBulkSaveToServer: false,
+
+    saveBulk: function() {
+      var url = "/ed/bulk_happenings";
+      Discourse.ajax(url, {
+        data: {
+            title: Discourse.Happening.happeningCity,
+            raw_json: Discourse.Happening.bulk_happenings_raw_json,
+            source: "last_fm"
+        },
+        type:  'POST'
+      }).then(function(){
+        debugger;
+        Discourse.Happening.pendingBulkSaveToServer = false;
+        Discourse.Happening.bulk_happenings_raw_json = "";
+      });
+    },
 
     loadFromRemote: function() {
       var url = "http://ws.audioscrobbler.com/2.0/?method=geo.getevents&location="
       + Discourse.Happening.happeningCity.toLowerCase() + "&api_key=11c7b0fa1ebea56f97d90b605e6ace2e&format=json"
       
-      debugger;
       return Discourse.ajax(url).then(function(response){
+        // TODO: handle errors properly
+        if(response.error){
+          return [];
+        };
 
           var happenings = [];
           // var happenings_json = JSON.parse( response.bulk_happening.raw_json);
@@ -94,13 +101,15 @@ Discourse.Happening.reopenClass({
                 }
             happenings.push(happeningResource);
           });
+         Discourse.Happening.bulk_happenings_raw_json = JSON.stringify(response);
+         Discourse.Happening.pendingBulkSaveToServer = true;
          return happenings; 
       });
 
     },
 
-    load: function(city) {
-      var url = "/ed/bulk_happenings/" + city + ".json";
+    load: function() {
+      var url = "/ed/bulk_happenings/" + Discourse.Happening.happeningCity + ".json";
       return Discourse.ajax(url).then(function(response){
 
           if(response === null){

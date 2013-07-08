@@ -1,40 +1,25 @@
 
-// Discourse.HappeningsController = Ember.ArrayController.extend({
-// // Discourse.Controller.extend({
-//   // categoryBinding: 'topicList.category',
-//   // canCreateCategory: false,
-//   // canCreateTopic: false,
+Discourse.HappeningController = Discourse.Controller.extend({
+	// Ember.ArrayController.extend({
+// 
+  // categoryBinding: 'topicList.category',
+  // canCreateCategory: false,
+  // canCreateTopic: false,
   
-//   // // needs: ['composer', 'modal', 'listTopics'],
-//   // needs: ['composer','listTopics'],
+  // // needs: ['composer', 'modal', 'listTopics'],
+  // needs: ['composer','listTopics'],
 
+  navLeftItems: function() {
+    var loggedOn = !!Discourse.User.current();
 
-//   // availableNavItems: function() {
-//   //   var summary = this.get('filterSummary');
-//   //   var loggedOn = false;
-//   //   // !!Discourse.User.current();
-//   //   // return Discourse.SiteSettings.top_menu.split("|").map(function(i) {
-//   //   return "music|meetups".split("|").map(function(i) {
-//   //     return Discourse.NavItem.fromText(i, {
-//   //       loggedOn: loggedOn
-//   //     });
-//   //   }).filter(function(i) {
-//   //     return i !== null;
-//   //   });
-//   // }.property(),
-
-
-//   // availableNavItems: function() {
-//   //   var loggedOn = !!Discourse.User.current();
-
-//   //   return Discourse.SiteSettings.top_menu.split("|").map(function(i) {
-//   //     return Discourse.NavItem.fromText(i, {
-//   //       loggedOn: loggedOn
-//   //     });
-//   //   }).filter(function(i) {
-//   //     return i !== null;
-//   //   });
-//   // }.property(),
+    return "Madrid|Barcelona".split("|").map(function(i) {
+      return Discourse.NavLeftItem.fromText(i, {
+        loggedOn: loggedOn
+      });
+    }).filter(function(i) {
+      return i !== null;
+    });
+  }.property()
 
 
 //   happeningsOdd: function() {
@@ -76,7 +61,7 @@
 //   }.observes('filterMode', 'category')
 
 
-// });
+});
 
 
 

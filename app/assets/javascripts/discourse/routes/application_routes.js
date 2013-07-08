@@ -12,9 +12,9 @@ Discourse.Route.buildRoutes(function() {
   // this.resource('happenings', { path: '/happenings'}, function(){
   //   this.route('fromCity', { path: '/:country/:city'});
   // });
-  this.resource('happening', { path: '/happening'}, function() {
+  this.resource('happening', { path: '/happening/:city'}, function() {
     this.route('show', { path: '/details/:id'});
-    this.route('inCity', {path: '/city/:city'})
+    this.route('inCity', {path: '/'})
   });
 
 

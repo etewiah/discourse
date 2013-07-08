@@ -1,0 +1,16 @@
+<div class="container">
+
+  <section class="left-nav-column">
+    <ul class="nav left-nav-pills" id='category-filter'>
+      <li title="Conversations"><a href="/latest">Conversations</a>
+      </li>
+    </ul>
+
+    <ul class="nav left-nav-pills" id='category-filter'>
+      {{each navLeftItems itemViewClass="Discourse.NavLeftItemView"}}
+    </ul>
+  </section>    
+
+
+  {{ outlet }}
+</div>

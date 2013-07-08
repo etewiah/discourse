@@ -25,17 +25,26 @@ Discourse.NavLeftItemView = Discourse.View.extend({
   }.property("content.filter"),
 
   isActive: function() {
-    if(this.get('controller.happeningCity').toLowerCase() === this.get('content.name').toLowerCase() ) return "active";
+    if(Discourse.Happening.happeningCity.toLowerCase() === this.get('content.name').toLowerCase() ) return "active";
     // if(this.get('controller.filterMode') === undefined && this.get('content.name') === "happenings") return "active";
     // if (this.get("content.name").toLowerCase().replace(' ','-') === this.get("controller.filterMode")) return "active";
     return "";
-  }.property("content.name", "controller.filterMode"),
+  }.property("content.name", "controller.happeningCity"),
 
   hidden: Em.computed.not('content.visible'),
 
   countChanged: function(){
     this.rerender();
   }.observes('count'),
+
+  href: function() {
+    var name = this.get('name');
+    // if( name.split('/')[0] === 'category' ) {
+    //   return Discourse.getURL("/") + 'category/' + this.get('categorySlug');
+    // } else {
+      return Discourse.getURL("/happening/city/") + name.replace(' ', '-');
+    // }
+  }.property('name'),
 
   name: function() {
     // var categoryName, extra, name;
@@ -48,17 +57,18 @@ Discourse.NavLeftItemView = Discourse.View.extend({
     //   name = 'category';
     //   extra.categoryName = Discourse.Formatter.toTitleCase(categoryName);
     // }
-    // debugger;
     // return I18n.t("js.filters." + name + ".title", extra);
     return this.get('content.name');
   }.property('count'),
 
+
   render: function(buffer) {
     var content = this.get('content');
-    buffer.push("<a href='" + content.get('href') + "'>");
-    if (content.get('hasIcon')) {
-      buffer.push("<span class='" + content.get('name') + "'></span>");
-    }
+    buffer.push("<a href='" + this.get('href') + "'>");
+    // buffer.push("<a href='" + content.get('href') + "'>");
+    // if (content.get('hasIcon')) {
+    //   buffer.push("<span class='" + content.get('name') + "'></span>");
+    // }
     buffer.push(this.get('name'));
     buffer.push("</a>");
   }

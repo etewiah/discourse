@@ -20,7 +20,8 @@ class Ed::HappeningsController < ApplicationController
   # GET /happenings/1.json
   def show
     @happening = Happening.find(params[:id])
-
+# Ed: TODO: add a dummy topic that prompts user if no topics found...
+    @happening.topics.push (Topic.last)
       render json: @happening 
     # respond_to do |format|
     #   # format.html # show.html.erb
