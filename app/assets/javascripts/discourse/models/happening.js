@@ -167,7 +167,10 @@ Discourse.Happening.reopenClass({
   // }
   find: function(id) {
     return Discourse.ajax("/ed/happenings/" + id + ".json").then(function (result) {
-      return Discourse.Happening.create(result.happening);
+      var happening = Discourse.Happening.create(result);
+      // happening.set('edTitle', 'eddddiiiiieee');
+      // happening returned will have a happening and a topic object
+      return happening;
     });
   }
 

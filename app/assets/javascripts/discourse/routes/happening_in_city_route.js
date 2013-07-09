@@ -10,7 +10,6 @@ Discourse.HappeningInCityRoute = Ember.Route.extend({
   },
 
   model: function(params) {
-    debugger;
     // var controller = this.controllerFor('happeningInCity');
     // controller.set('happeningCity', params.city);
     // var happeningsController = this.controllerFor('listHappenings');

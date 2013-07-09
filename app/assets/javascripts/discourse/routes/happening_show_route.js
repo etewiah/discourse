@@ -10,21 +10,23 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
 
 
   model: function(params) {
-    // var happeningController = this.controllerFor('happeningShow');
-    // if (happeningController) happeningController.set('filterMode', "happenings");
-    // Ed TODO: will nest show under city so this will not be necessary:
-    // if (happeningController) happeningController.set("happeningCity", "Madrid");
+    var happening = Discourse.Happening.find(params.id);
+    // return happening;
 
-    var record = Discourse.Happening.find(params.id);
-    // happeningController.load();
-    // var promise = Ember.Deferred.create();
-    // record.addObserver('isLoaded', function() {
-    //   promise.resolve(record);
-    // });
-
-    // return promise;
-
-    return record;
+    params = {};
+    // {slug: "madrid-emprende", id: "29"};
+    // var currentModel, _ref;
+    // if (currentModel = (_ref = this.controllerFor('topic')) ? _ref.get('content') : void 0) {
+    //   if (currentModel.get('id') === parseInt(params.id, 10)) {
+    //     return currentModel;
+    //   }
+    // }
+    var topic = Discourse.HappeningTopic.create(params);
+    // return topic;
+    return { 
+      topic: topic,
+      happening: happening
+    }
   },
 
 
@@ -34,30 +36,48 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
     return model;  
   },
 
-  // setupController: function(controller, model) {
-  //   // var result = Ember.Object.create({title: "11111", isLoaded: true});
-  //   // var result = Ember.Object.create({content: {title: "boooo"}, isLoaded: true});
-  //   // controller.set('content', result);
-  //   controller.set('model', model);    // debugger;
-  //   // this.controllerFor('activedataset.index').set('content', App.ActiveDataSet.findAll(model.id));
-  // }
-
   setupController: function(controller, model) {
-    controller.set('model', model)
+    // var record = Discourse.Happening.find(48);
+    controller.set('content', model.topic);
+    
     // below is a bit silly - its so side nav knows what to highlight
     // what I really need to do is use model.city directly in the side nav
-    controller.set('happeningCity', model.city);
-    if( model.get('loaded_from_remote'))
-    {
-      model.save().then(function(result){
-      });
-    }
+    // controller.set('happeningCity', model.city);
+    
+
+    // if( model.get('loaded_from_remote'))
+    // {
+    //   model.save().then(function(result){
+    //   });
+    // }
+
+    var topicController = this.controllerFor('topic');
+
+
+    model.happening.then( function(result){
+    // below from topic_from_params route:
+        var params =  {};
+        params.trackVisit = true;
+        params.happening = result.happening;
+
+    model.topic.slug = result.happening_topics[0].slug;
+    // "test-from-library";
+    // "madrid-emprende";
+    model.topic.id = result.happening_topics[0].id;
+    // "37";
+
+        topicController.set('content', model.topic);
+        topicController.cancelFilter();
+        topicController.loadPosts(params);
+    });
   },
 
   renderTemplate: function() {
     this.render('happening_show', {
     });
     this.render('happening_topic', {
+      outlet: 'topic',
+      controller: 'topic'
     });
   }
 

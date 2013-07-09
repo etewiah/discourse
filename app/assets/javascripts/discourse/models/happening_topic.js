@@ -1,12 +1,12 @@
 /**
-  A data model representing a Topic
-
-  @class Topic
+  Ed:
+    - Copy of Topic model with some extra bits to display a happening
+    - Chose not to extend the Topic model in case of future breaking changes...
   @extends Discourse.Model
   @namespace Discourse
   @module Discourse
 **/
-Discourse.Topic = Discourse.Model.extend({
+Discourse.HappeningTopic = Discourse.Model.extend({
 
   fewParticipants: function() {
     if (!this.present('participants')) return null;
@@ -221,8 +221,13 @@ Discourse.Topic = Discourse.Model.extend({
   // Load the posts for this topic
   loadPosts: function(opts) {
     var topic = this;
-
     if (!opts) opts = {};
+
+    topic.set("happeningTitle", "This is Ed's..222");
+
+    if(opts.happening){
+      topic.set("happening", opts.happening);
+    }
 
     // Load the first post by default
     if ((!opts.bestOf) && (!opts.nearPost)) opts.nearPost = 1;
@@ -235,7 +240,6 @@ Discourse.Topic = Discourse.Model.extend({
 
     // If loading the topic succeeded...
     var afterTopicLoaded = function(result) {
-
       var closestPostNumber, lastPost, postDiff;
 
       // Update the slug if different
@@ -263,7 +267,7 @@ Discourse.Topic = Discourse.Model.extend({
         topic.set('suggested_topics', Em.A());
       }
 
-      topic.mergeAttributes(result, { suggested_topics: Discourse.Topic });
+      topic.mergeAttributes(result, { suggested_topics: Discourse.HappeningTopic });
       topic.set('posts', Em.A());
       if (opts.trackVisit && result.draft && result.draft.length > 0) {
         Discourse.openComposer({
@@ -313,7 +317,7 @@ Discourse.Topic = Discourse.Model.extend({
     };
 
     // Finally, call our find method
-    return Discourse.Topic.find(this.get('id'), {
+    return Discourse.HappeningTopic.find(this.get('id'), {
       nearPost: opts.nearPost,
       bestOf: opts.bestOf,
       trackVisit: opts.trackVisit
@@ -399,7 +403,7 @@ Discourse.Topic = Discourse.Model.extend({
   }.property('pinned', 'last_read_post_number', 'highest_post_number')
 });
 
-Discourse.Topic.reopenClass({
+Discourse.HappeningTopic.reopenClass({
   NotificationLevel: {
     WATCHING: 3,
     TRACKING: 2,
@@ -417,7 +421,7 @@ Discourse.Topic.reopenClass({
   **/
   findSimilarTo: function(title, body) {
     return Discourse.ajax("/topics/similar_to", { data: {title: title, raw: body} }).then(function (results) {
-      return results.map(function(topic) { return Discourse.Topic.create(topic) });
+      return results.map(function(topic) { return Discourse.HappeningTopic.create(topic) });
     });
   },
 
@@ -491,7 +495,9 @@ Discourse.Topic.reopenClass({
   },
 
   create: function(obj, topicView) {
-    debugger;
+    // Ed: TODO:
+    // - figure out why this gets called multiple times when displaying 1 topic
+    // UPDATE - it seems to be called from the findSimilarTo function...
     var result = this._super(obj);
 
     if (result.participants) {
