@@ -1,7 +1,7 @@
 Discourse.HappeningInCityRoute = Ember.Route.extend({
   events: {
     talkAboutHappening: function(happening){
-      Discourse.Route.showModal(this, 'createHappeningTopic', happening);
+      Discourse.Route.showModal(this, 'createHappeningAndTopic', happening);
     }
     // createCategory: function() {
     //   Discourse.Route.showModal(this, 'editCategory', Discourse.Category.create({ color: 'AB9364', text_color: 'FFFFFF', hotness: 5 }));

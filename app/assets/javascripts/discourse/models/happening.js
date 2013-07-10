@@ -48,7 +48,8 @@ Discourse.Happening = Discourse.Model.extend({
           meta: this.get('meta'),
           source: this.get('source'),
           city: this.get('city'),
-          country: this.get('country')
+          country: this.get('country'),
+          topic_id: this.get('topic_id')
         }
       },
       type: this.get('id') ? 'PUT' : 'POST'

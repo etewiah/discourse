@@ -34,6 +34,10 @@ class Ed::HappeningsController < ApplicationController
 
     # User.where(:first_name => 'Scarlett').first_or_create(:last_name => 'Johansson')
     @happening = Happening.where(:source => params[:happening][:source], :meta => params[:happening][:meta]).first_or_initialize(create_params)
+
+    if(params[:happening][:topic_id])
+      @happening.topics.push(Topic.find(params[:happening][:topic_id]))
+    end
     # @happening = Happening.new(create_params)
     if @happening.save
       render json: @happening, status: :created

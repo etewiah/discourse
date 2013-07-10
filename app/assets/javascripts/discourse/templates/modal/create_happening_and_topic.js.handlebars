@@ -1,0 +1,54 @@
+  <ul class="nav nav-pills">
+    <li {{bindAttr class="generalSelected:active"}}>
+      <a href="#" {{action selectGeneral}}>{{ title }}</a>
+    </li>
+  </ul>
+
+
+<div class="modal-body" >
+  Modal body.....
+
+     <div >
+      <form>
+        <section class='field'>
+          <label>{{i18n category.name}}</label>
+          {{textField  maxlength="50"}}
+        </section>
+
+          {{view Ember.TextField valueBinding="title"}}
+
+
+      </form>
+    </div>
+
+
+</div>
+
+  <div class="modal-footer">
+    <button class='btn btn-primary pull-right' {{action createHappeningAndTopic}}> 
+      Save
+    </button>
+    <button class='btn btn-default pull-right' {{action closeModal}}>{{i18n cancel}}</button>
+  </div>
+
+
+
+  <div id='move-selected' class="modal-body">
+  {{#if error}}
+    <div class="alert alert-error">
+      <button class="close" data-dismiss="alert">×</button>
+    </div>
+  {{/if}}
+
+  {{{i18n topic.split_topic.instructions count="selectedPostsCount"}}}
+
+  <form>
+    <label>{{i18n topic.split_topic.topic_name}}</label>
+    {{textField value=topicName placeholderKey="composer.title_placeholder"}}
+  </form>
+
+</div>
+
+<div class="modal-footer">
+  <button class='btn btn-primary' {{bindAttr disabled="buttonDisabled"}} {{action movePostsToNewTopic}}>{{buttonTitle}}</button>
+</div>
