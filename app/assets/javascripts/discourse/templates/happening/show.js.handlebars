@@ -1,14 +1,13 @@
-<div class="container">
- 
   <section class="category-column">
     <table id="happening-list">
     <tbody>
       <tr>
-        <th class="num">{{content.title}} {{ content.happeningTitle }}</th>
-        <th class="num">Age</th>
+        <th class="num">{{content.happening.title}} </th>
       </tr>
       <tr>
         <td>
+          {{ content.happening.mainImage }}
+          {{ content.happening.descriptionFromJson }}
            <a {{bindAttr href="url"}} target="_blank">{{origin}}  {{title}} </a>
 {{ content.happening.title }}
         {{#if pics}}
@@ -16,19 +15,11 @@
           <img {{bindAttr src="pic.url"}}>  
           {{/each}}
         {{/if}}
+{{!debugger}}
+     
+
           <td></tr>
 
         </tbody>
       </table>
-      <footer class="clearfix">
-        <figure title="topics posted in the last 365 days">
-          <span class="number" title="2">2</span>
-          <figcaption>year</figcaption>
-        </figure>
-        <a href="#" data-ember-action="22" class="btn btn-small">edit</a>
-        <button class='btn btn-primary btn-small' {{action createTopicModal happening}}> 
-          Talk about this
-        </button>
-      </footer>
     </section>
-</div>

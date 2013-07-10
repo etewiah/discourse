@@ -42,7 +42,7 @@ Discourse.NavLeftItemView = Discourse.View.extend({
     // if( name.split('/')[0] === 'category' ) {
     //   return Discourse.getURL("/") + 'category/' + this.get('categorySlug');
     // } else {
-      return Discourse.getURL("/happening/city/") + name.replace(' ', '-');
+      return Discourse.getURL("/happening/") + name.replace(' ', '-');
     // }
   }.property('name'),
 

@@ -1,5 +1,5 @@
 
-Discourse.CreateHappeningTopicController =  Discourse.Controller.extend({
+Discourse.CreateHappeningTopicController =  Discourse.Controller.extend(Discourse.ModalFunctionality, {
 
    createHappeningTopic: function() {
       var createHappeningTopicController = this;
@@ -22,10 +22,10 @@ Discourse.CreateHappeningTopicController =  Discourse.Controller.extend({
       // happening.addObserver('id', this, this.happeningCreated);
 
       happening.save().then(function(result) {
-        // success
-
-      debugger;
-        createHappeningTopicController.send('closeModal');
+        // createHappeningTopicController.send('closeModal');
+        // above seems to call the closeModal event in application_route which renders a view
+        // which simply does the same as below:
+        $('#discourse-modal').modal('hide');
         createHappeningTopicController.transitionToRoute('happening.show', happening);
 
         // Discourse.URL.redirectTo("/happening/" + "1");

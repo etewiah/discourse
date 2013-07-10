@@ -1,5 +1,4 @@
 {{! Happening Topic }}
-<div class="container">
 
 {{#if content}}
   {{#if loaded}}
@@ -41,8 +40,8 @@
       </div>
     </div>
     {{/if}}
-
-    <div class="container posts">
+{{! Ed: removed container class }}
+    <div class="posts span14">
 
       {{view Discourse.SelectedPostsView}}
       <div class="row">
@@ -63,7 +62,8 @@
               <div class='spinner'>{{i18n loading}}</div>
             {{/if}}
 
-            {{collection itemViewClass="Discourse.PostView" contentBinding="posts" topicViewBinding="view"}}
+{{! where posts get rendered: }}
+            {{collection itemViewClass="Discourse.HappeningPostView" contentBinding="posts" topicViewBinding="view"}}
 
             {{#if loadingBelow}}
               <div class='spinner'>{{i18n loading}}</div>
@@ -146,4 +146,4 @@
 {{#if currentUser.staff}}
   {{render topicAdminMenu content}}
 {{/if}}
-</div>
+

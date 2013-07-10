@@ -8,6 +8,16 @@
 **/
 Discourse.HappeningTopic = Discourse.Model.extend({
 
+
+
+  mainImage: function() {
+    debugger;
+    if (!this.present('participants')) return null;
+    return this.get('participants').slice(0, 3);
+  }.property(),
+
+
+  
   fewParticipants: function() {
     if (!this.present('participants')) return null;
     return this.get('participants').slice(0, 3);
@@ -222,8 +232,6 @@ Discourse.HappeningTopic = Discourse.Model.extend({
   loadPosts: function(opts) {
     var topic = this;
     if (!opts) opts = {};
-
-    topic.set("happeningTitle", "This is Ed's..222");
 
     if(opts.happening){
       topic.set("happening", opts.happening);

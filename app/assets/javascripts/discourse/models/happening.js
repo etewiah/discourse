@@ -17,6 +17,23 @@ Discourse.Happening = Discourse.Model.extend({
   // json_details: DS.attr('string'),
   // topics: DS.hasMany('Discourse.HappeningTopic')
 
+  mainImage: function() {
+    debugger;
+    if (!this.present('participants')) return null;
+    return this.get('participants').slice(0, 3);
+  }.property('json_details'),
+
+  descriptionFromJson: function() {
+    debugger;
+    if (!this.present('participants')) return null;
+    return this.get('participants').slice(0, 3);
+  }.property('id'),
+
+  // fewParticipants: function() {
+  //   if (!this.present('participants')) return null;
+  //   return this.get('participants').slice(0, 3);
+  // }.property('participants'),
+
   save: function(args) {
     var url = "/ed/happenings";
     if (this.get('id')) {
@@ -167,10 +184,9 @@ Discourse.Happening.reopenClass({
   // }
   find: function(id) {
     return Discourse.ajax("/ed/happenings/" + id + ".json").then(function (result) {
-      var happening = Discourse.Happening.create(result);
-      // happening.set('edTitle', 'eddddiiiiieee');
-      // happening returned will have a happening and a topic object
-      return happening;
+      // debugger;
+      // var happening = Discourse.Happening.create(result);
+      return result;
     });
   }
 

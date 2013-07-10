@@ -14,15 +14,9 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
     // return happening;
 
     params = {};
-    // {slug: "madrid-emprende", id: "29"};
-    // var currentModel, _ref;
-    // if (currentModel = (_ref = this.controllerFor('topic')) ? _ref.get('content') : void 0) {
-    //   if (currentModel.get('id') === parseInt(params.id, 10)) {
-    //     return currentModel;
-    //   }
-    // }
-    var topic = Discourse.HappeningTopic.create(params);
-    // return topic;
+    var topic = {}; 
+    // Discourse.HappeningTopic.create(params);
+
     return { 
       topic: topic,
       happening: happening
@@ -36,40 +30,59 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
     return model;  
   },
 
+
+// TODO:::
+// CLEAN UP ALL THE SHIT I HAVE THAT GETS A TOPIC AND A HAPPENING IN THE MODELL!!!!
   setupController: function(controller, model) {
-    // var record = Discourse.Happening.find(48);
-    controller.set('content', model.topic);
-    
-    // below is a bit silly - its so side nav knows what to highlight
-    // what I really need to do is use model.city directly in the side nav
-    // controller.set('happeningCity', model.city);
-    
+    //topic property is not set when I reach here through
+    //the linkto helper which bypasses the model function in this class....
+    if(!model.hasOwnProperty('topic')){
+      if( model.get('loaded_from_remote')){
+        var happeningShowController = this.controllerFor('happeningShow');
+        //for some reason 'controller' is not available within the function below so I 
+        //am created another instance of it and assigned it to a var
+        model.save().then(function(result){
+          var happening = Discourse.Happening.create(result.happening);
+          happeningShowController.transitionToRoute('happening.show', happening);
+        });
+        //controller.transitionToRoute('happening.show', happening)
+      }
+      else {
+        controller.set('content', {happening: model});
+      }
+    }
+    else{
+      model.topic = Discourse.HappeningTopic.create({});
+      // controller.set('content', model.topic);
+      
+      // below is a bit silly - its so side nav knows what to highlight
+      // what I really need to do is use model.city directly in the side nav
+      // controller.set('happeningCity', model.city);
+      
+      var topicController = this.controllerFor('topic');
+      var happeningShowController = this.controllerFor('happeningShow');
+      //for some reason 'controller' is not available within the function below so I 
+      //am created another instance of it and assigned it to a var
 
-    // if( model.get('loaded_from_remote'))
-    // {
-    //   model.save().then(function(result){
-    //   });
-    // }
-
-    var topicController = this.controllerFor('topic');
-
-
-    model.happening.then( function(result){
-    // below from topic_from_params route:
+      model.happening.then( function(result){
+        var happening = Discourse.Happening.create(result.happening);
+        happeningShowController.set('content', {happening: happening});
+      // below from topic_from_params route:
         var params =  {};
         params.trackVisit = true;
         params.happening = result.happening;
 
-    model.topic.slug = result.happening_topics[0].slug;
-    // "test-from-library";
-    // "madrid-emprende";
-    model.topic.id = result.happening_topics[0].id;
-    // "37";
+        model.topic.slug = result.happening_topics[0].slug;
+        // "test-from-library";
+        // "madrid-emprende";
+        model.topic.id = result.happening_topics[0].id;
+        // "37";
 
         topicController.set('content', model.topic);
         topicController.cancelFilter();
         topicController.loadPosts(params);
-    });
+      });
+    }
   },
 
   renderTemplate: function() {
