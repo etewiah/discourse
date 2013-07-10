@@ -16,18 +16,18 @@ class Ed::HappeningsController < ApplicationController
     end
   end
 
+  def update
+    # Ed: right now, updates don't handle changing happening data itself 
+    # only used to add comments...
+  end
+
   # GET /happenings/1
   # GET /happenings/1.json
   def show
     @happening = Happening.find(params[:id])
 # Ed: TODO: add a dummy topic that prompts user if no topics found...
-    @happening.topics.push (Topic.last)
-      render json: @happening 
-    # respond_to do |format|
-    #   # format.html # show.html.erb
-    #   # format.json 
-    #   render json: @happening 
-    # end
+    # @happening.topics.push (Topic.last)
+    render json: @happening 
   end
 
   def create

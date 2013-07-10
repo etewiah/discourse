@@ -1,109 +1,83 @@
 
-Discourse.CreateHappeningTopicController =  Discourse.Controller.extend(Discourse.ModalFunctionality, {
+Discourse.CreateHappeningAndTopicController =  Discourse.Controller.extend(Discourse.ModalFunctionality, {
+
+   createHappeningAndTopic: function() {
+
+      var createHappeningTopicController = this;
+      this.set('saving', true);
+      // relies on:
+      // http://wjlroe.github.io/2013/06/06/ember-transition-to-new-model-hack.html
+      // saveTheWidget: function() {
+      //   var model = App.Widget.createRecord({name: "very_special_widget"});
+      //   model.addObserver('id', this, this.showWidget);
+      //   model.get('store').commit();
+      // },
+      // showWidget: function(model) {
+      //   model.removeObserver('id', this, this.showWidget);
+      //   this.transitionToRoute('widgets.show', model);
+      // }
+
+      happening  = this.get('model');
+      // var model = App.Widget.createRecord({name: "special_widget"});
+
+      // happening.addObserver('id', this, this.happeningCreated);
+
+      happening.save().then(function(result) {
+        // createHappeningTopicController.send('closeModal');
+        // above seems to call the closeModal event in application_route which renders a view
+        // which simply does the same as below:
+        $('#discourse-modal').modal('hide');
+        createHappeningTopicController.transitionToRoute('happening.show', happening);
+
+        // Discourse.URL.redirectTo("/happening/" + "1");
+            //Discourse.Category.slugFor(result.category));
+      }, function(errors) {
+        // errors
+      debugger;
+        if(errors.length === 0) errors.push(Em.String.i18n("category.creation_error"));
+        createHappeningTopicController.displayErrors(errors);
+        createHappeningTopicController.set('saving', false);
+      });
+    },
 
     createHappeningTopic: function() {
 
-      // var createHappeningTopicController = this;
+      var createHappeningTopicController = this;
+      this.set('saving', true);
+      // relies on:
+      // http://wjlroe.github.io/2013/06/06/ember-transition-to-new-model-hack.html
+      // saveTheWidget: function() {
+      //   var model = App.Widget.createRecord({name: "very_special_widget"});
+      //   model.addObserver('id', this, this.showWidget);
+      //   model.get('store').commit();
+      // },
+      // showWidget: function(model) {
+      //   model.removeObserver('id', this, this.showWidget);
+      //   this.transitionToRoute('widgets.show', model);
+      // }
 
-      // this.set('saving', true);
+      happening  = this.get('model');
+      // var model = App.Widget.createRecord({name: "special_widget"});
 
-      // 
+      // happening.addObserver('id', this, this.happeningCreated);
 
-      var currentUser = Discourse.User.current();
-      debugger;
-      var createdPost = Discourse.Post.create({
-        raw: "from create happ ctrl",
-        title: this.get('content.title'),
-        reply_to_post_number:  null,
-        imageSizes: {},
-        post_number: null,
-        index: null,
-        cooked: "from create happ ctrl",
-        reply_count: 0,
-        display_username: currentUser.get('name'),
-        username: currentUser.get('username'),
-        user_id: currentUser.get('id'),
-        metaData: null,
-        archetype: "regular",
-        post_type: Discourse.Site.instance().get('post_types.regular'),
-        actions_summary: Em.A(),
-        moderator: false,
-        yours: true,
-        newPost: true
-      });
-
-      // "{"raw":"To see net trace when creating new topic","title":"Created from native ui",
-      // "reply_to_post_number":null,"imageSizes":{},"post_number":null,"index":null,
-      // "cooked":"<p>To see net trace when creating new topic</p>","reply_count":0,
-      // "display_username":"happensesame","username":"happensesame","user_id":1,"metaData":null,
-      // "archetype":"regular","post_type":1,
-      // "actions_summary":[],"moderator":true,"yours":true,"newPost":true,"actionByName":{}}"
-
-
-debugger;
-
-      var happening  = this.get('model');
-
-      //Below comes from composer.js
-      createdPost.save(function(result) {
-        // TODO - set this on happening and save to server... result.topic_slug;
+      happening.save().then(function(result) {
+        // createHappeningTopicController.send('closeModal');
+        // above seems to call the closeModal event in application_route which renders a view
+        // which simply does the same as below:
         $('#discourse-modal').modal('hide');
         createHappeningTopicController.transitionToRoute('happening.show', happening);
-        // var addedPost = false,
-        //     saving = true;
 
-        // createdPost.updateFromSave(result);
-        // if (topic) {
-        //   // It's no longer a new post
-        //   createdPost.set('newPost', false);
-        //   topic.set('draft_sequence', result.draft_sequence);
-        // } else {
-        //   // We created a new topic, let's show it.
-        //   composer.set('composeState', CLOSED);
-        //   saving = false;
-        // }
-
-        // composer.set('reply', '');
-        // composer.set('createdPost', createdPost);
-        // if (addedToStream) {
-        //   composer.set('composeState', CLOSED);
-        // } else if (saving) {
-        //   composer.set('composeState', SAVING);
-        // }
-        // return promise.resolve({ post: result });
-      }, function(error) {
-        // If an error occurs
-        // if (topic) {
-        //   topic.posts.removeObject(createdPost);
-        //   topic.set('filtered_posts_count', topic.get('filtered_posts_count') - 1);
-        // }
-        // promise.reject($.parseJSON(error.responseText).errors[0]);
-        // composer.set('composeState', OPEN);
+        // Discourse.URL.redirectTo("/happening/" + "1");
+            //Discourse.Category.slugFor(result.category));
+      }, function(errors) {
+        // errors
+      debugger;
+        if(errors.length === 0) errors.push(Em.String.i18n("category.creation_error"));
+        createHappeningTopicController.displayErrors(errors);
+        createHappeningTopicController.set('saving', false);
       });
-
-
-      // happening.save().then(function(result) {
-      //   // createHappeningTopicController.send('closeModal');
-      //   // above seems to call the closeModal event in application_route which renders a view
-      //   // which simply does the same as below:
-      //   $('#discourse-modal').modal('hide');
-      //   createHappeningTopicController.transitionToRoute('happening.show', happening);
-
-      //   // Discourse.URL.redirectTo("/happening/" + "1");
-      //       //Discourse.Category.slugFor(result.category));
-      // }, function(errors) {
-      //   // errors
-      // debugger;
-      //   if(errors.length === 0) errors.push(Em.String.i18n("category.creation_error"));
-      //   createHappeningTopicController.displayErrors(errors);
-      //   createHappeningTopicController.set('saving', false);
-      // });
     },
-
-
-
-
-
 
       // Below is from composer.js, used for creating new post and also new topics..
   createPost: function(opts) {

@@ -1,25 +1,32 @@
-  <section class="category-column">
-    <table id="happening-list">
-    <tbody>
-      <tr>
-        <th class="num">{{content.happening.title}} </th>
-      </tr>
-      <tr>
-        <td>
-          {{ content.happening.mainImage }}
-          {{ content.happening.descriptionFromJson }}
-           <a {{bindAttr href="url"}} target="_blank">{{origin}}  {{title}} </a>
+<section class="category-column">
+<table id="happening-list">
+<tbody>
+  <tr>
+    <th class="num">{{content.happening.title}} </th>
+  </tr>
+  <tr>
+    <td>
+      {{ content.happening.mainImage }}
+      {{{ content.happening.descriptionFromJson }}}
+       <a {{bindAttr href="url"}} target="_blank">{{origin}}  {{title}} </a>
 {{ content.happening.title }}
-        {{#if pics}}
-          {{#each pic in pics }}
-          <img {{bindAttr src="pic.url"}}>  
-          {{/each}}
-        {{/if}}
-{{!debugger}}
-     
+    {{#if pics}}
+      {{#each pic in pics }}
+      <img {{bindAttr src="mainImageUrl"}}>  
+      {{/each}}
+    {{/if}}
+      <img {{bindAttr src="content.happening.mainImageUrl"}}>  
+ 
 
-          <td></tr>
+      <td></tr>
 
-        </tbody>
-      </table>
-    </section>
+    </tbody>
+  </table>
+
+  <footer class="clearfix" style="margin-top:30px">
+    <button class='btn btn-primary btn-large' {{action talkAboutHappening content.happening}}> 
+      Talk about this
+    </button>
+  </footer>
+
+</section>

@@ -17,17 +17,17 @@ Discourse.Happening = Discourse.Model.extend({
   // json_details: DS.attr('string'),
   // topics: DS.hasMany('Discourse.HappeningTopic')
 
-  mainImage: function() {
-    debugger;
-    if (!this.present('participants')) return null;
-    return this.get('participants').slice(0, 3);
+  mainImageUrl: function() {
+    if (!this.present('json_details')) return null;
+    happeningDetails = JSON.parse(this.json_details);
+    return happeningDetails.image[2]['#text'];
   }.property('json_details'),
 
   descriptionFromJson: function() {
-    debugger;
-    if (!this.present('participants')) return null;
-    return this.get('participants').slice(0, 3);
-  }.property('id'),
+    if (!this.present('json_details')) return null;
+    happeningDetails = JSON.parse(this.json_details);
+    return happeningDetails.description;
+  }.property(),
 
   // fewParticipants: function() {
   //   if (!this.present('participants')) return null;
