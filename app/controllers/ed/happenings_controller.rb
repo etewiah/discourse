@@ -19,6 +19,15 @@ class Ed::HappeningsController < ApplicationController
   def update
     # Ed: right now, updates don't handle changing happening data itself 
     # only used to add comments...
+    @happening = Happening.find(params[:id])
+    if(params[:happening][:topic_id])
+      @happening.topics.push(Topic.find(params[:happening][:topic_id]))
+    end
+    if @happening.save
+      render json: @happening
+    else
+      render json: @happening.errors, status: :unprocessable_entity 
+    end
   end
 
   # GET /happenings/1
@@ -35,7 +44,7 @@ class Ed::HappeningsController < ApplicationController
     # User.where(:first_name => 'Scarlett').first_or_create(:last_name => 'Johansson')
     @happening = Happening.where(:source => params[:happening][:source], :meta => params[:happening][:meta]).first_or_initialize(create_params)
 
-    if(params[:happening][:topic_id])
+    if(params[:happening][:topic_id] && !params[:happening][:topic_id].empty?)
       @happening.topics.push(Topic.find(params[:happening][:topic_id]))
     end
     # @happening = Happening.new(create_params)

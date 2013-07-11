@@ -25,12 +25,12 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
 
     params = {};
     var topic = {}; 
-    // Discourse.HappeningTopic.create(params);
-
-    return { 
-      topic: topic,
-      happening: happening
-    }
+    return happening;
+    
+    // return { 
+    //   topic: topic,
+    //   happening: happening
+    // }
   },
 
 
@@ -46,53 +46,87 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
   setupController: function(controller, model) {
     //topic property is not set when I reach here through
     //the linkto helper which bypasses the model function in this class....
-    if(!model.hasOwnProperty('topic')){
-      if( model.get('loaded_from_remote')){
-        var happeningShowController = this.controllerFor('happeningShow');
-        //for some reason 'controller' is not available within the function below so I 
-        //am created another instance of it and assigned it to a var
-        model.save().then(function(result){
-          var happening = Discourse.Happening.create(result.happening);
-          happeningShowController.transitionToRoute('happening.show', happening);
-        });
-        //controller.transitionToRoute('happening.show', happening)
-      }
-      else {
-        controller.set('content', {happening: model});
-      }
-    }
-    else{
-      model.topic = Discourse.HappeningTopic.create({});
-      // controller.set('content', model.topic);
+    // if(!model.hasOwnProperty('topic')){
+    //   if( model.get('loaded_from_remote')){
+    //     var happeningShowController = this.controllerFor('happeningShow');
+    //     //for some reason 'controller' is not available within the function below so I 
+    //     //am created another instance of it and assigned it to a var
+    //     model.save().then(function(result){
+    //       var happening = Discourse.Happening.create(result.happening);
+    //       happeningShowController.transitionToRoute('happening.show', happening);
+    //     });
+    //     //controller.transitionToRoute('happening.show', happening)
+    //   }
+    //   else {
+    //     controller.set('content', {happening: model});
+    //   }
+    // }
+    // else{
+
+      // Happenings with ids already exist on the server so go ahead and display
+    if(model.id){
+      var topic = Discourse.HappeningTopic.create({});
+      // controller.set('content', topic);
       
       // below is a bit silly - its so side nav knows what to highlight
       // what I really need to do is use model.city directly in the side nav
       // controller.set('happeningCity', model.city);
       
       var topicController = this.controllerFor('topic');
-      var happeningShowController = this.controllerFor('happeningShow');
+      // var happeningShowController = this.controllerFor('happeningShow');
       //for some reason 'controller' is not available within the function below so I 
       //am created another instance of it and assigned it to a var
 
-      model.happening.then( function(result){
-        var happening = Discourse.Happening.create(result.happening);
-        happeningShowController.set('content', {happening: happening});
-      // below from topic_from_params route:
+
+        // var happening = Discourse.Happening.create(model.happening);
+        controller.set('content', {happening: model});
+
         var params =  {};
         params.trackVisit = true;
-        params.happening = result.happening;
+        params.happening = model;
+debugger;
+        if(model.happening_topic_ids[0]){
+          // topic.slug = model.happening_topic_ids[0].slug;
+          // "test-from-library";
+          // "madrid-emprende";
+          topic.id = model.happening_topic_ids[0];
+          // "37";
 
-        model.topic.slug = result.happening_topics[0].slug;
-        // "test-from-library";
-        // "madrid-emprende";
-        model.topic.id = result.happening_topics[0].id;
-        // "37";
+          topicController.set('content', topic);
+          topicController.cancelFilter();
+          topicController.loadPosts(params);
+        }
+      }
+      //otherwise create on server first
+      else{
+        var happeningShowController = this.controllerFor('happeningShow');
+        //for some reason 'controller' is not available within the function below so I 
+        // created another instance of it and assigned it to a var
+        model.save().then(function(result){
+          var happening = Discourse.Happening.create(result.happening);
+          happeningShowController.transitionToRoute('happening.show', happening);
+        });
+      }
 
-        topicController.set('content', model.topic);
-        topicController.cancelFilter();
-        topicController.loadPosts(params);
-      });
-    }
+      // model.then( function(result){
+      //   var happening = Discourse.Happening.create(result.happening);
+      //   happeningShowController.set('content', {happening: happening});
+      // // below from topic_from_params route:
+      //   var params =  {};
+      //   params.trackVisit = true;
+      //   params.happening = result.happening;
+
+      //   topic.slug = result.happening_topics[0].slug;
+      //   // "test-from-library";
+      //   // "madrid-emprende";
+      //   topic.id = result.happening_topics[0].id;
+      //   // "37";
+
+      //   topicController.set('content', topic);
+      //   topicController.cancelFilter();
+      //   topicController.loadPosts(params);
+      // });
+    //}
   },
 
   renderTemplate: function() {

@@ -1,7 +1,19 @@
 Discourse.HappeningInCityRoute = Ember.Route.extend({
   events: {
     talkAboutHappening: function(happening){
-      Discourse.Route.showModal(this, 'createHappeningAndTopic', happening);
+      // currently, happening list is from json data so there will not be an id..
+      if(happening.id){
+        Discourse.Route.showModal(this, 'createHappeningAndTopic', happening);
+      }
+      else{
+        var router = this;
+        happening.save().then(function(result){
+          var happening = Discourse.Happening.create(result.happening);
+          Discourse.Route.showModal(router, 'createHappeningAndTopic', happening);
+        });
+      }
+
+
     }
     // createCategory: function() {
     //   Discourse.Route.showModal(this, 'editCategory', Discourse.Category.create({ color: 'AB9364', text_color: 'FFFFFF', hotness: 5 }));

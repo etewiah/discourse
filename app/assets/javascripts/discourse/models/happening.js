@@ -39,6 +39,10 @@ Discourse.Happening = Discourse.Model.extend({
     if (this.get('id')) {
       url = "/ed/happenings/" + (this.get('id'));
     }
+    // var topicId = null;
+    if(this.get('happening_topic_ids')){
+      var topicId = this.get('happening_topic_ids')[0];
+    }
     return Discourse.ajax(url, {
       data: {
         happening: {
@@ -49,7 +53,7 @@ Discourse.Happening = Discourse.Model.extend({
           source: this.get('source'),
           city: this.get('city'),
           country: this.get('country'),
-          topic_id: this.get('topic_id')
+          topic_id: topicId
         }
       },
       type: this.get('id') ? 'PUT' : 'POST'
@@ -185,9 +189,8 @@ Discourse.Happening.reopenClass({
   // }
   find: function(id) {
     return Discourse.ajax("/ed/happenings/" + id + ".json").then(function (result) {
-      // debugger;
-      // var happening = Discourse.Happening.create(result);
-      return result;
+      var happening = Discourse.Happening.create(result.happening);
+      return happening;
     });
   }
 

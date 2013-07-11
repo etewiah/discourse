@@ -30,13 +30,15 @@ Discourse.CreateHappeningAndTopicController =  Discourse.Controller.extend(Disco
       var happening  = this.get('model');
 
       createdPost.save(function(result) {
+        happening.set('happening_topic_ids', [result.topic_id]);
         debugger;
-        happening.set('topic_id', result.topic_id);
          happening.save().then(function(result) {
             $('#discourse-modal').modal('hide');
             createHappeningTopicController.transitionToRoute('happening.show', happening);
           }, function(errors) {
-            debugger;
+            //The update was just to add a comment - ignore any errors
+            $('#discourse-modal').modal('hide');
+            createHappeningTopicController.transitionToRoute('happening.show', happening);
           });
 
 

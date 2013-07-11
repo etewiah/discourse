@@ -10,7 +10,6 @@ Discourse.CreateHappeningTopicController =  Discourse.Controller.extend(Discours
       // 
 
       var currentUser = Discourse.User.current();
-      debugger;
       var createdPost = Discourse.Post.create({
         raw: "from create happ ctrl",
         title: this.get('content.title'),
@@ -40,7 +39,6 @@ Discourse.CreateHappeningTopicController =  Discourse.Controller.extend(Discours
       // "actions_summary":[],"moderator":true,"yours":true,"newPost":true,"actionByName":{}}"
 
 
-debugger;
 
       var happening  = this.get('model');
 
@@ -107,7 +105,6 @@ debugger;
 
       // Below is from composer.js, used for creating new post and also new topics..
   createPost: function(opts) {
-    debugger;
     var post = this.get('post'),
         topic = this.get('topic'),
         currentUser = Discourse.User.current(),
