@@ -65,7 +65,7 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
 
       // Happenings with ids already exist on the server so go ahead and display
     if(model.id){
-      var topic = Discourse.HappeningTopic.create({});
+      var topic = Discourse.Topic.create({});
       // controller.set('content', topic);
       
       // below is a bit silly - its so side nav knows what to highlight
@@ -84,8 +84,8 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
         var params =  {};
         params.trackVisit = true;
         params.happening = model;
-debugger;
         if(model.happening_topic_ids[0]){
+          controller.set('hasComments', true);
           // topic.slug = model.happening_topic_ids[0].slug;
           // "test-from-library";
           // "madrid-emprende";
@@ -95,6 +95,10 @@ debugger;
           topicController.set('content', topic);
           topicController.cancelFilter();
           topicController.loadPosts(params);
+        }
+        else{
+          controller.set('hasComments', false);
+          topicController.set('content', '');
         }
       }
       //otherwise create on server first
@@ -107,26 +111,6 @@ debugger;
           happeningShowController.transitionToRoute('happening.show', happening);
         });
       }
-
-      // model.then( function(result){
-      //   var happening = Discourse.Happening.create(result.happening);
-      //   happeningShowController.set('content', {happening: happening});
-      // // below from topic_from_params route:
-      //   var params =  {};
-      //   params.trackVisit = true;
-      //   params.happening = result.happening;
-
-      //   topic.slug = result.happening_topics[0].slug;
-      //   // "test-from-library";
-      //   // "madrid-emprende";
-      //   topic.id = result.happening_topics[0].id;
-      //   // "37";
-
-      //   topicController.set('content', topic);
-      //   topicController.cancelFilter();
-      //   topicController.loadPosts(params);
-      // });
-    //}
   },
 
   renderTemplate: function() {

@@ -491,7 +491,6 @@ Discourse.Topic.reopenClass({
   },
 
   create: function(obj, topicView) {
-    debugger;
     var result = this._super(obj);
 
     if (result.participants) {

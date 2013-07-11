@@ -24,9 +24,13 @@
   </table>
 
   <footer class="clearfix" style="margin-top:30px">
+    {{#if hasComments}}
+      has comments....
+    {{else}}
     <button class='btn btn-primary btn-large' {{action talkAboutHappening content.happening}}> 
       Talk about this
     </button>
+    {{/if}}
   </footer>
 
 </section>

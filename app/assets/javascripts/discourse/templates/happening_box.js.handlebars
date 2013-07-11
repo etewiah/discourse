@@ -2,13 +2,12 @@
 <tbody>
   <tr>
     <th class="num">{{happening.title}}</th>
-    <th class="num">Age</th>
   </tr>
   <tr>
     <td>
-       <a {{bindAttr href="happening.url"}} target="_blank">{{happening.title}}</a>
+       {{#linkTo 'happening.show' happening }} {{happening.title}} {{/linkTo}}
 
-       {{#linkTo 'happening.show' happening }} ember happening link {{/linkTo}}
+
     {{#if happening.pics}}
       {{#each pic in happening.pics }}
       <img {{bindAttr src="pic.url"}}>  
