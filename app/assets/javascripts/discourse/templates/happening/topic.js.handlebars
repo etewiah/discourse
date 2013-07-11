@@ -41,7 +41,7 @@
     </div>
     {{/if}}
 {{! Ed: removed container class  - as title above is not rendering, added style below to pad things.. }}
-    <div class="posts span14" style="margin-top: 40px;">
+    <div class="posts " style="margin-top: 20px;">
 
       {{view Discourse.SelectedPostsView}}
       <div class="row">
@@ -129,7 +129,10 @@
       </div>
     {{else}}
       <div class='container'>
+      <!--
+      don't care about loading on happening topics 
         <div class='spinner'>{{i18n loading}}</div>
+      -->
       </div>
     {{/if}}
   {{/if}}

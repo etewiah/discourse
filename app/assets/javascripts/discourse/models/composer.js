@@ -356,7 +356,6 @@ Discourse.Composer = Discourse.Model.extend({
   // Create a new Post
   // Ed: Also called when creating a new Topic...
   createPost: function(opts) {
-    debugger;
     var post = this.get('post'),
         topic = this.get('topic'),
         currentUser = Discourse.User.current(),

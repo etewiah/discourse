@@ -102,8 +102,10 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
           topicController.loadPosts(params);
         }
         else{
+          // Ed: hasComments is used within a reply 
           controller.set('hasComments', false);
-          topicController.set('content', '');
+          // Ed: attempt to clean up ghost topic content from previous happening...
+          topicController.set('content', topic);
         }
       }
       //otherwise create on server first
