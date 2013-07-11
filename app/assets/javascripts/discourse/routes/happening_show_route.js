@@ -92,6 +92,11 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
           topic.id = model.happening_topic_ids[0];
           // "37";
 
+          //this value only exists clientside - its not persisted to the server
+          // good and bad in a way....
+          topic.hasHappening = true;
+          topic.happening = model;
+
           topicController.set('content', topic);
           topicController.cancelFilter();
           topicController.loadPosts(params);

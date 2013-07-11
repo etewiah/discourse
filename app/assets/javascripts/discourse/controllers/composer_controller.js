@@ -49,9 +49,16 @@ Discourse.ComposerController = Discourse.Controller.extend({
 
     composer.set('disableDrafts', true);
 
+    // Ed:  added below to avoid pop-up in happenings:
+    if(this.content.topic.hasHappening){
+      force = this.content.topic.hasHappening;
+      _this.hasHappening = this.content.topic.hasHappening;
+    }
+
+
     // for now handle a very narrow use case
     // if we are replying to a topic AND not on the topic pop the window up
-
+debugger;
     if(!force && composer.get('replyingToTopic')) {
       topic = this.get('topic');
       if (!topic || topic.get('id') !== composer.get('topic.id'))
@@ -92,6 +99,7 @@ Discourse.ComposerController = Discourse.Controller.extend({
     return composer.save({
       imageSizes: this.get('view').imageSizes()
     }).then(function(opts) {
+      debugger;
       opts = opts || {};
       _this.close();
 
@@ -101,8 +109,16 @@ Discourse.ComposerController = Discourse.Controller.extend({
       } else {
         currentUser.set('reply_count', currentUser.get('reply_count') + 1);
       }
-      Discourse.URL.routeTo(opts.post.get('url'));
+
+      debugger;
+      // happeningShowController.transitionToRoute('happening.show', happening);
+      // 
+
+      if(!_this.hasHappening){
+        Discourse.URL.routeTo(opts.post.get('url'));
+      }
     }, function(error) {
+      debugger;
       composer.set('disableDrafts', false);
       bootbox.alert(error);
     });
