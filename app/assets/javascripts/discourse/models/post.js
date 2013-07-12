@@ -20,7 +20,18 @@ Discourse.Post = Discourse.Model.extend({
   }.property('trust_level'),
 
   url: function() {
-    return Discourse.Utilities.postUrl(this.get('topic.slug') || this.get('topic_slug'), this.get('topic_id'), this.get('post_number'));
+    // Ed: like with topics, url for happening topic posts are different
+    if(this.get('topic.happeningUrl')){
+      if(this.get('post_number')){
+        return this.get('topic.happeningUrl') + "/" + this.get('post_number');
+      }
+      else{
+        return this.get('topic.happeningUrl')
+      }
+    }
+    else{
+      return Discourse.Utilities.postUrl(this.get('topic.slug') || this.get('topic_slug'), this.get('topic_id'), this.get('post_number'));
+    }
   }.property('post_number', 'topic_id', 'topic.slug'),
 
   originalPostUrl: function() {

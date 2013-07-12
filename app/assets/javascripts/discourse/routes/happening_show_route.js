@@ -23,7 +23,6 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
       // Discourse.Route.showModal(this, 'invite', this.modelFor('topic'));
 // Ed:
       Discourse.Route.showModal(this, 'invite', this.controllerFor('topic').get('content') );
-      debugger;
 
       this.controllerFor('invite').setProperties({
         email: null,
@@ -145,6 +144,7 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
           //this value only exists clientside - its not persisted to the server
           // good and bad in a way....
           topic.hasHappening = true;
+          topic.happeningUrl = "/happening/" + model.city + "/details/" + model.id;
           topic.happening = model;
 
           topicController.set('content', topic);
@@ -152,7 +152,8 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
           topicController.loadPosts(params);
         }
         else{
-          // Ed: hasComments is used within a reply 
+          // Ed: hasComments is used when rendering to decide if to render 
+          // 'talk about this' button
           controller.set('hasComments', false);
           // Ed: attempt to clean up ghost topic content from previous happening...
           topicController.set('content', topic);

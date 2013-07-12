@@ -53,7 +53,8 @@
               {{view Discourse.TopicFooterButtonsView topicBinding="model"}}
 
               {{#if suggested_topics.length}}
-                <div id='suggested-topics'>
+              <!-- Ed: Taking out suggested topics... -->
+                <div id='suggested-topics' style="display:none">
 
                   <h3>{{i18n suggested_topics.title}}</h3>
 

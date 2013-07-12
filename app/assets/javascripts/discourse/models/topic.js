@@ -43,11 +43,17 @@ Discourse.Topic = Discourse.Model.extend({
   }.property('url'),
 
   url: function() {
-    var slug = this.get('slug');
-    if (slug.trim().length === 0) {
-      slug = "topic";
+    // Ed: for happening topics, I'll use diff url..
+    if(this.happeningUrl){
+      return this.happeningUrl;
     }
-    return Discourse.getURL("/t/") + slug + "/" + (this.get('id'));
+    else{
+      var slug = this.get('slug');
+      if (slug.trim().length === 0) {
+        slug = "topic";
+      }
+      return Discourse.getURL("/t/") + slug + "/" + (this.get('id'));
+    }
   }.property('id', 'slug'),
 
   // Helper to build a Url with a post number
