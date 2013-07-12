@@ -1,3 +1,5 @@
+{{! Ed:  only diff here was a span which is now same as post view TODO - remove this }}
+
 <div class='row'>
   <section class='embedded-posts top parent-post span14 offset2' style='display:none'>
     {{#if view.parentPost}}
@@ -32,7 +34,7 @@
       </div>
     </div>
 
-    <div class='topic-body span12'>
+    <div class='topic-body span14'>
       <div {{bindAttr class="showUserReplyTab:avoid-tab view.repliesHidden:bottom-round :contents :regular view.extraClass"}}>
         {{view Discourse.PrependPostView postBinding="this"}}
         {{#unless controller.multiSelect}}
@@ -58,12 +60,11 @@
       {{view Discourse.TopicSummaryView postBinding="this"}}
     </div>
 
+    <!--
     <div class='span5 gutter'>
-      {{collection contentBinding="internalLinks" itemViewClass="Discourse.PostLinkView" tagName="ul" classNames="post-links"}}
-      {{#if controller.can_reply_as_new_topic}}
-        <a href='#' class='reply-new' {{action replyAsNewTopic this}}><i class='icon icon-plus'></i>{{i18n post.reply_as_new_topic}}</a>
-      {{/if}}
+taken out stuff here to prevent replying as new topic.  Might add summary list of other interesting happenings...
     </div>
+  -->
   </div>
 
 </article>

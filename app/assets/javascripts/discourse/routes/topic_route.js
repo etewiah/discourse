@@ -24,6 +24,7 @@ Discourse.TopicRoute = Discourse.Route.extend({
     },
 
     showInvite: function() {
+      debugger;
       Discourse.Route.showModal(this, 'invite', this.modelFor('topic'));
       this.controllerFor('invite').setProperties({
         email: null,

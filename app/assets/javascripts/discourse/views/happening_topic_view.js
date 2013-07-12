@@ -8,7 +8,7 @@
   @module Discourse
 **/
 Discourse.HappeningTopicView = Discourse.View.extend(Discourse.Scrolling, {
-  templateName: 'topic',
+  templateName: 'happening_topic',
   topicBinding: 'controller.content',
   userFiltersBinding: 'controller.userFilters',
   classNameBindings: ['controller.multiSelect:multi-select', 'topic.archetype', 'topic.category.secure:secure_category'],
@@ -462,12 +462,14 @@ Discourse.HappeningTopicView = Discourse.View.extend(Discourse.Scrolling, {
       }
     }
 
-    var headerController = this.get('controller.controllers.header');
-    if (this.docAt) {
-      headerController.set('showExtraInfo', offset >= this.docAt || !firstLoaded);
-    } else {
-      headerController.set('showExtraInfo', !firstLoaded);
-    }
+// Ed: This adds an element to the header giving the title of topic
+//  not working well and I don't really want it.
+    // var headerController = this.get('controller.controllers.header');
+    // if (this.docAt) {
+    //   headerController.set('showExtraInfo', offset >= this.docAt || !firstLoaded);
+    // } else {
+    //   headerController.set('showExtraInfo', !firstLoaded);
+    // }
 
     // there is a whole bunch of caching we could add here
     var $lastPost = $('.last-post');

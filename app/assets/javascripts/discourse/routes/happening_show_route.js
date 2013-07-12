@@ -1,14 +1,64 @@
 Discourse.HappeningShowRoute = Ember.Route.extend({
 
+
   events: {
     talkAboutHappening: function(happening){
       Discourse.Route.showModal(this, 'createHappeningTopic', happening);
+    },
+
+    //below are events copied from 'topic_route'
+    // Modals that can pop up within a topic
+
+    showFlags: function(post) {
+      Discourse.Route.showModal(this, 'flag', post);
+      this.controllerFor('flag').setProperties({ selected: null });
+    },
+
+    showAutoClose: function() {
+      Discourse.Route.showModal(this, 'editTopicAutoClose', this.modelFor('topic'));
+      this.controllerFor('modal').set('modalClass', 'edit-auto-close-modal');
+    },
+
+    showInvite: function() {
+      // Discourse.Route.showModal(this, 'invite', this.modelFor('topic'));
+// Ed:
+      Discourse.Route.showModal(this, 'invite', this.controllerFor('topic').get('content') );
+      debugger;
+
+      this.controllerFor('invite').setProperties({
+        email: null,
+        error: false,
+        saving: false,
+        finished: false
+      });
+    },
+
+    showPrivateInvite: function() {
+      Discourse.Route.showModal(this, 'invitePrivate', this.modelFor('topic'));
+      this.controllerFor('invitePrivate').setProperties({
+        email: null,
+        error: false,
+        saving: false,
+        finished: false
+      });
+    },
+
+    showHistory: function(post) {
+      Discourse.Route.showModal(this, 'history', post);
+      this.controllerFor('history').refresh();
+      this.controllerFor('modal').set('modalClass', 'history-modal');
+    },
+
+    mergeTopic: function() {
+      Discourse.Route.showModal(this, 'mergeTopic', this.modelFor('topic'));
+    },
+
+    splitTopic: function() {
+      Discourse.Route.showModal(this, 'splitTopic', this.modelFor('topic'));
     }
-    // createCategory: function() {
-    //   Discourse.Route.showModal(this, 'editCategory', Discourse.Category.create({ color: 'AB9364', text_color: 'FFFFFF', hotness: 5 }));
-    //   this.controllerFor('editCategory').set('selectedTab', 'general');
-    // }
+
   },
+
 
   activate: function() {
     // debugger;
