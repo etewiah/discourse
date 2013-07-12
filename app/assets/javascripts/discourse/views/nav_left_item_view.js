@@ -25,7 +25,7 @@ Discourse.NavLeftItemView = Discourse.View.extend({
   }.property("content.filter"),
 
   isActive: function() {
-    if(Discourse.Happening.happeningCity.toLowerCase() === this.get('content.name').toLowerCase() ) return "active";
+    if(this.get('controller.happeningCity').toLowerCase() === this.get('content.name').toLowerCase() ) return "active";
     // if(this.get('controller.filterMode') === undefined && this.get('content.name') === "happenings") return "active";
     // if (this.get("content.name").toLowerCase().replace(' ','-') === this.get("controller.filterMode")) return "active";
     return "";

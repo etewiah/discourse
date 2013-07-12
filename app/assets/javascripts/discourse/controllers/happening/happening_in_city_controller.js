@@ -35,8 +35,7 @@ Discourse.HappeningInCityController = Ember.ArrayController.extend({
       });
   }.property('content.isLoaded'),
 
-// Ed: TODO: figure out what dif 'content.isLoaded' makes
-// I think the above gets called again when I navigate back client side.....
+// Ed: without  'content.isLoaded', does not get refreshed as I navigate
 
    happeningsEven: function() {
       var content = this.get('content');
@@ -44,7 +43,7 @@ Discourse.HappeningInCityController = Ember.ArrayController.extend({
       return content.filter(function(item, index) {
         return (index % 2) === 0;
       });
-  }.property(),
+  }.property('content.isLoaded'),
 
   // Put in the appropriate page title based on our view
   updateTitle: function() {

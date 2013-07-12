@@ -7,9 +7,9 @@ Discourse.HappeningRoute = Ember.Route.extend({
     // Ed: below is the only way I have found to be able to set the city so I can 
     // retrieve it again in another method (if I need to get happenings from remote api..)
     Discourse.Happening.happeningCity = params.city;
-    // var controller = this.controllerFor('happening');
-    // controller.set('happeningCity', 'Madrid');
-      // params.city);
+    // but I also need to set happeningCity on the controller as
+    var controller = this.controllerFor('happening');
+    controller.set('happeningCity', params.city);
   }
 
   // renderTemplate: function() {
