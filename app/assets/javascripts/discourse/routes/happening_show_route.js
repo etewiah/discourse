@@ -90,27 +90,7 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
   },
 
 
-// TODO:::
-// CLEAN UP ALL THE SHIT I HAVE THAT GETS A TOPIC AND A HAPPENING IN THE MODELL!!!!
   setupController: function(controller, model) {
-    //topic property is not set when I reach here through
-    //the linkto helper which bypasses the model function in this class....
-    // if(!model.hasOwnProperty('topic')){
-    //   if( model.get('loaded_from_remote')){
-    //     var happeningShowController = this.controllerFor('happeningShow');
-    //     //for some reason 'controller' is not available within the function below so I 
-    //     //am created another instance of it and assigned it to a var
-    //     model.save().then(function(result){
-    //       var happening = Discourse.Happening.create(result.happening);
-    //       happeningShowController.transitionToRoute('happening.show', happening);
-    //     });
-    //     //controller.transitionToRoute('happening.show', happening)
-    //   }
-    //   else {
-    //     controller.set('content', {happening: model});
-    //   }
-    // }
-    // else{
 
       // Happenings with ids already exist on the server so go ahead and display
     if(model.id){
@@ -159,7 +139,8 @@ Discourse.HappeningShowRoute = Ember.Route.extend({
           topicController.set('content', topic);
         }
       }
-      //otherwise create on server first
+      //otherwise I got here through a "linkto" with a happening created client side
+      // so create on server first
       else{
         var happeningShowController = this.controllerFor('happeningShow');
         //for some reason 'controller' is not available within the function below so I 

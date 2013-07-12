@@ -5,6 +5,7 @@ Discourse.CreateHappeningTopicController =  Discourse.Controller.extend(Discours
 
    createHappeningTopic: function() {
 
+debugger;
       var createHappeningTopicController = this;
 
       var currentUser = Discourse.User.current();

@@ -9,7 +9,12 @@ Discourse.HappeningInCityRoute = Ember.Route.extend({
         var router = this;
         happening.save().then(function(result){
           var happening = Discourse.Happening.create(result.happening);
-          Discourse.Route.showModal(router, 'createHappeningAndTopic', happening);
+          if(result.happening_topics[0]){
+            router.controllerFor('topic').transitionToRoute('happening.show', happening);
+          }
+          else{
+            Discourse.Route.showModal(router, 'createHappeningAndTopic', happening);
+          }
         });
       }
 

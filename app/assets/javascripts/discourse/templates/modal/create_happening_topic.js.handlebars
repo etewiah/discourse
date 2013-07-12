@@ -13,7 +13,7 @@
         {{textField  maxlength="50"}}
       </section>
 
-        {{view Ember.TextField valueBinding="title"}}
+        {{view Ember.TextArea valueBinding="title"}}
 
   <label>{{i18n topic.split_topic.topic_name}}</label>
   {{textField value=topicName placeholderKey="composer.title_placeholder"}}
@@ -28,7 +28,6 @@
   <button class='btn btn-primary pull-right' {{action createHappeningTopic}}> 
     Save
   </button>
-  <button class='btn btn-default pull-right' {{action closeModal}}>{{i18n cancel}}</button>
 </div>
 
 
