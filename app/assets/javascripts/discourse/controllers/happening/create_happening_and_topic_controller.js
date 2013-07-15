@@ -7,13 +7,12 @@ Discourse.CreateHappeningAndTopicController =  Discourse.Controller.extend(Disco
 
       var currentUser = Discourse.User.current();
       var createdPost = Discourse.Post.create({
-        raw: "from create happ ctrl",
+        raw: this.get('content.comment'),
         title: this.get('content.title'),
         reply_to_post_number:  null,
         imageSizes: {},
         post_number: null,
         index: null,
-        cooked: "from create happ ctrl",
         reply_count: 0,
         display_username: currentUser.get('name'),
         username: currentUser.get('username'),

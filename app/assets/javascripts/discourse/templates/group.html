@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+<h1>Band page</h1>
+
+
+
+
+
+<div id="details" class="vevent clearit">
+
+                                <div id="poster">
+    <div id="smallPoster">
+        <span id="posterLarge" class="lineupPoster clearit lineupPosterlarge posterToggle" style=" width: 128px;">
+            <span><strong>Elvis Costello &amp; The Imposters</strong></span>
+                            
+                                        <img title="Elvis Costello" class="photo" height="64" width="64" alt="" src="http://userserve-ak.last.fm/serve/64s/30370141.jpg">                            <img title="Elvis Costello &amp; The Imposters" class="photo" height="64" width="64" alt="" src="http://userserve-ak.last.fm/serve/64s/299041.jpg">                        <span class="foot">
+                Circo Teatro Price<br>
+                <strong>Saturday 27 July 2013</strong>
+            </span>
+        </span>        <img src="http://cdn.last.fm/flatness/tape.png" class="theTape transparent_png" width="36" height="17">
+    </div>
+    <div id="largePoster" style="display: none;">
+        <span id="posterMega" class="lineupPoster clearit lineupPostermega posterToggle" style=" width: 252px;">
+            <span><strong>Elvis Costello &amp; The Imposters</strong></span>
+                            
+                                        <img title="Elvis Costello" class="photo" height="374" width="252" alt="" src="http://userserve-ak.last.fm/serve/252/30370141.jpg">                            <img title="Elvis Costello &amp; The Imposters" class="photo" height="189" width="252" alt="" src="http://userserve-ak.last.fm/serve/252/299041.jpg">                        <span class="foot">
+                Circo Teatro Price<br>
+                <strong>Saturday 27 July 2013</strong>
+            </span>
+        </span>        <img src="http://cdn.last.fm/flatness/tape.png" class="theTape transparent_png" width="36" height="17">
+            </div>
+    
+        <p class="jsOnly">
+        <a href="#uploadPoster" id="uploadPoster">Upload poster</a>
+    </p>
+        
+</div>                
+                                
+                <span class="category hide">Concert</span>
+
+                                
+                                                        <p class="support">
+                        With <a href="/music/Elvis+Costello">Elvis Costello</a> and <a href="/music/Elvis+Costello+&amp;+The+Imposters">Elvis Costello &amp; The Imposters</a>                    </p>
+                                
+                                <div class="metaBadge metaBadgeDate">
+        <strong><abbr class="dtstart" title="2013-07-27T21:30:00">    
+            Saturday 27 July 2013
+                    
+</abbr>
+                                at <span>9:30pm</span>
+                </strong>
+    
+        <div>
+                        <a href="#addToACalendar" id="addToCalendar" data-analytics-action="AddToCalendarDialog">
+            <span class="linkTitle">Add to a calendar</span>
+                    <span id="calsheet"><span class="calSheet calSheetSmall">
+    <time datetime="2013-07-27">
+        <abbr class="dtstart" title="Saturday 27 July 2013">            <span title="2013-07-27T21:30:00">
+                <span class="month">Jul</span>
+                <span class="day">27</span>
+            </span>
+        </abbr>    </time>
+</span></span>
+        
+        </a>    </div>
+                    <script>
+        $('addToCalendar').observe('click', function (e) {
+            e.preventDefault();
+            var dialog = new LFM.Dialog({
+                resource: LFM.ParentResource,
+                classname: 'embedDialog',
+                title: "Add to a calendar",
+                content: "        <ul>\n            <li><a href=\"webcal:\/\/ws.audioscrobbler.com\/2.0\/event\/3564841\/info.ical\" class=\"icon\" data-analytics-action=\"AddToCalendar\" data-analytics-label=\"iCal\"><img class=\"icon ical_icon\" width=\"16\" height=\"16\" src=\"http:\/\/cdn.last.fm\/flatness\/clear.gif\" style=\"\" \/><span>Add to iCal<\/span><\/a><\/li>\n            <li><a href=\"http:\/\/www.google.com\/calendar\/event?action=TEMPLATE&text=Elvis+Costello+%26+The+Imposters%3A+Elvis+Costello+%2F+Elvis+Costello+%26+The+Imposters&details=http%3A%2F%2Fwww.last.fm%2Fevent%2F3564841%2BElvis%2BCostello%2B-%2BThe%2BImposters%0A%0A&sprop%5B0%5D=website%3Awww.last.fm&sprop%5B1%5D=name%3ALast.fm&dates=20130727T213000Z%2F20130727T213000Z&location=Ronda+de+Atocha%2C+35%2C+28012+Madrid%2C+Spain+%28Circo+Teatro+Price%29\" target=\"_blank\" class=\"icon\" data-analytics-action=\"AddToCalendar\" data-analytics-label=\"GoogleCalendar\"><img class=\"icon google_cal_icon\" width=\"16\" height=\"16\" src=\"http:\/\/cdn.last.fm\/flatness\/clear.gif\" style=\"\" \/><span>Add to Google Calendar<\/span><\/a><\/li>\n        <\/ul>\n        <ul>\n            <li><a href=\"webcal:\/\/ws.audioscrobbler.com\/2.0\/event\/3564841\/info.ical\" class=\"icon\" data-analytics-action=\"AddToCalendar\" data-analytics-label=\"Outlook\"><img class=\"icon outlook_cal_icon\" width=\"16\" height=\"16\" src=\"http:\/\/cdn.last.fm\/flatness\/clear.gif\" style=\"\" \/><span>Add to Outlook<\/span><\/a><\/li>\n            <li><a href=\"http:\/\/ws.audioscrobbler.com\/2.0\/event\/3564841\/info.ical\" class=\"icon\" data-analytics-action=\"AddToCalendar\" data-analytics-label=\"icsFile\"><img class=\"icon cal_icon\" width=\"13\" height=\"14\" src=\"http:\/\/cdn.last.fm\/flatness\/clear.gif\" style=\"\" \/><span>Download .ics file<\/span><\/a><\/li>\n        <\/ul>\n        ",
+                onConfirm: function(evt) {
+                                        evt.stop(); 
+                    dialog.hide();
+                }                        
+            });
+            dialog.show();
+        });
+</script>
+    </div>                
+                                    <div id="venue" class="location vcard">
+        <p class="venue"><a href="/venue/8845306+Circo+Teatro+Price" class="fn org">Circo Teatro Price</a></p>
+        <div class="adr">
+            <span class="street-address">Ronda de Atocha, 35</span><br><span class="postal-code">28012</span> <span class="locality">Madrid</span><br><span class="country-name">Spain</span><br><a href="http://maps.google.com/maps?f=q&amp;q=Circo+Teatro+Price%2C+Ronda+de+Atocha%2C+35%2C+Madrid%2C+28012%2C+ES&amp;ie=UTF8&amp;om=1&amp;iwloc=addr" class="addrMap" target="_blank">Show on Map <img class="mapIcon" src="http://cdn.last.fm/flatness/location_icon_32.png" alt="Show on Map"></a>                            <p class="contact">
+                                            Tel: <span class="tel">91 528 81 22</span>
+                        <br>                                                                Web: <a class="url" href="http://www.teatrocircoprice.es" title="Opens in a new window" target="_blank">www.teatrocircoprice.es</a>
+                                    </p>
+                    </div>
+                            <div class="eventAffiliates">
+                                            </div>
+            </div>
+                
+                                <div id="description" class="clearit">
+                            
+        
+    <p class="modLinks">
+                    Event added by <a href="/user/CountryFeedback" title="Rutiger Hangla Mangla, 30, Antigua and Barbuda">CountryFeedback</a> | 
+                <a href="#flagEvent" id="flagEvent">Flag for review</a>
+                    </p>
+</div>                
+                                                
+                <script>
+
+LFM.Social.networks = {};
+LFM.Social.networks.facebook = new LFM.Social.Facebook("192959324047861", "en_US", "http%3A%2F%2Fwww.last.fm%2Ffacebook-channel.php%3Flang%3Den_US");
+LFM.Social.networks.twitter = new LFM.Social.Twitter();
+LFM.Social.networks.plusone = new LFM.Social.Plusone("");
+
+LFM.Page.Tracker.bindSocialListeners();
+</script>
+
+
+<div id="sharebar" class="s-resource">
+    <strong>
+                        Share this event:
+                </strong>
+    <ul id="sharebuttons">
+                <li class="twt-share">
+            <iframe allowtransparency="true" frameborder="0" scrolling="no" src="http://platform.twitter.com/widgets/tweet_button.1372833608.html#_=1373710912199&amp;count=none&amp;id=twitter-widget-0&amp;lang=en&amp;original_referer=http%3A%2F%2Fwww.last.fm%2Fevent%2F3564841%2BElvis%2BCostello%2B-%2BThe%2BImposters&amp;related=Lastfm_Trends&amp;size=m&amp;text=Check%20out%20Elvis%20Costello%20%26%20The%20Imposters%20at%20Circo%20Teatro%20Price&amp;url=http%3A%2F%2Fwww.last.fm%2Fevent%2F3564841%2BElvis%2BCostello%2B-%2BThe%2BImposters&amp;via=lastfm" class="twitter-share-button twitter-count-none" title="Twitter Tweet Button" data-twttr-rendered="true" style="width: 56px; height: 20px;"></iframe>
+        </li>
+                <li class="google-plus1">
+            <div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; background-color: transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 32px; height: 20px; background-position: initial initial; background-repeat: initial initial;"><iframe frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 32px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 20px;" tabindex="0" vspace="0" width="100%" id="I0_1373710911346" name="I0_1373710911346" src="https://apis.google.com/_/+1/fastbutton?bsv&amp;size=medium&amp;count=false&amp;hl=en-US&amp;origin=http%3A%2F%2Fwww.last.fm&amp;url=http%3A%2F%2Fwww.last.fm%2Fevent%2F3564841%2BElvis%2BCostello%2B-%2BThe%2BImposters&amp;ic=1&amp;jsh=m%3B%2F_%2Fscs%2Fapps-static%2F_%2Fjs%2Fk%3Doz.gapi.en_GB.ky7wolkmc08.O%2Fm%3D__features__%2Fam%3DEQ%2Frt%3Dj%2Fd%3D1%2Frs%3DAItRSTN5xXtilEMWYYjlBrsa9_-YzsRO8A#_methods=onPlusOne%2C_ready%2C_close%2C_open%2C_resizeMe%2C_renderstart%2Concircled&amp;id=I0_1373710911346&amp;parent=http%3A%2F%2Fwww.last.fm&amp;pfname=&amp;rpctoken=39085946" allowtransparency="true" data-gapiattached="true" title="+1"></iframe></div>
+            <script>
+
+                LFM.Social.networks.plusone.onReady(function(plusoneAPI) {
+                    plusoneAPI.plusone.go("sharebuttons");
+                });
+</script>
+        </li>
+                <li class="lfm-share">
+            <a href="/event/3564841+Elvis+Costello+-+The+Imposters" id="button1" class="lfmButton lfmBigButton lfmSendButton 
+" title="Elvis Costello &amp; The Imposters at Circo Teatro Price"><strong>Send</strong></a>
+    <script>
+(function () {
+    function showDialog () {
+        LFM.Send({"id":"3564841","type":29,"name":"Elvis Costello & The Imposters","url":"\/event\/3564841+Elvis+Costello+-+The+Imposters","startdate":{"year":"2013","month":"07","shortmonthname":"Jul","full":"Saturday 27 July 2013","day":27,"timestamp":"20130727T2130Z"},"venue":{"id":"8845306","type":30,"name":"Circo Teatro Price","url":"\/venue\/8845306+Circo+Teatro+Price","image":{"small":"http:\/\/userserve-ak.last.fm\/serve\/34\/543590.jpg","smallsquare":"http:\/\/userserve-ak.last.fm\/serve\/34s\/543590.jpg","medium":"http:\/\/userserve-ak.last.fm\/serve\/64\/543590.jpg","mediumsquare":"http:\/\/userserve-ak.last.fm\/serve\/64s\/543590.jpg","large":"http:\/\/userserve-ak.last.fm\/serve\/126\/543590.jpg","largesquare":"http:\/\/userserve-ak.last.fm\/serve\/126s\/543590.jpg","mega":"http:\/\/userserve-ak.last.fm\/serve\/252\/543590.jpg","original":"http:\/\/userserve-ak.last.fm\/serve\/_\/543590\/Circo+Teatro+Price.jpg"},"address":"Madrid, Spain","country":{"id":"202","type":26,"name":"Spain","url":"\/place\/Spain","address":"Spain","iso":"ES","flag":"http:\/\/cdn.last.fm\/depth\/flags\/mini\/es.gif"},"time_zone":"Europe\/Madrid"}}, {
+            parameters: null
+                        
+                                     
+             
+                    });
+    }
+        $("button1") && $("button1").observe("click", function (e) {
+        e.stop();
+                    LFM.Page.Tracker.storeTagSource("shareBtn");
+                showDialog();
+    });
+})()
+</script>        </li>
+                <!--[if !(lt IE 7)]><!-->         <li class="fbk-share">
+            <fb:like href="http://www.last.fm/event/3564841+Elvis+Costello+-+The+Imposters" layout="button_count" show_faces="false" action="like" font="lucida grande" ref="sharebar" fb-xfbml-state="rendered" class="fb_edge_widget_with_comment fb_iframe_widget"><span style="height: 20px; width: 75px;"><iframe id="f21f401e58" name="ff3eff90c" scrolling="no" title="Like this content on Facebook." class="fb_ltr" src="http://www.facebook.com/plugins/like.php?api_key=192959324047861&amp;locale=en_US&amp;sdk=joey&amp;ref=sharebar&amp;channel_url=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter.php%3Fversion%3D25%23cb%3Df1fe41c7a%26origin%3Dhttp%253A%252F%252Fwww.last.fm%252Ffc5a5fbac%26domain%3Dwww.last.fm%26relation%3Dparent.parent&amp;href=http%3A%2F%2Fwww.last.fm%2Fevent%2F3564841%2BElvis%2BCostello%2B-%2BThe%2BImposters&amp;node_type=link&amp;width=90&amp;font=lucida%20grande&amp;layout=button_count&amp;colorscheme=light&amp;action=like&amp;show_faces=false&amp;extended_social_context=false" style="border: none; overflow: hidden; height: 20px; width: 75px;"></iframe></span></fb:like>
+        </li>
+        <!--<![endif]-->
+    </ul>
+    <script>LFM.Page.Tracker.storeResourceTypeForURL("http://www.last.fm/event/3564841+Elvis+Costello+-+The+Imposters", "Event");</script>
+    
+</div>            </div>
+
+
+
+  </body>
+</html>

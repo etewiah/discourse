@@ -5,18 +5,17 @@ Discourse.CreateHappeningTopicController =  Discourse.Controller.extend(Discours
 
    createHappeningTopic: function() {
 
-debugger;
       var createHappeningTopicController = this;
 
       var currentUser = Discourse.User.current();
       var createdPost = Discourse.Post.create({
-        raw: "smm page cmmmtttt",
+        // raw: "smm page cmmmtttt",
         title: this.get('content.title'),
         reply_to_post_number:  null,
         imageSizes: {},
         post_number: null,
         index: null,
-        cooked: "from create happ ctrl",
+        raw: this.get('content.comment'),
         reply_count: 0,
         display_username: currentUser.get('name'),
         username: currentUser.get('username'),

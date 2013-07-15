@@ -10,16 +10,11 @@
     <form>
       <section class='field'>
         <label>Your comment</label>
-        {{textField  maxlength="50"}}
+        {{view Ember.TextArea valueBinding="content.comment"}}
       </section>
-
-        {{view Ember.TextArea valueBinding="title"}}
-
-  <label>{{i18n topic.split_topic.topic_name}}</label>
-  {{textField value=topicName placeholderKey="composer.title_placeholder"}}
-
     </form>
   </div>
+
 
 
 </div>
